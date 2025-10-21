@@ -1,0 +1,132 @@
+@charset "UTF-8";
+
+:root{
+    --color-primary: #ffc107;
+    --color-secondary: #ff7707;
+}
+
+html {
+    font-size: 14px;
+    font-family: Archivo, sans-serif;
+    line-height: 1.5;
+    background-color: #fff;
+    scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+footer img{
+    width: 250px !important;
+    height: 250px !important;
+    border-radius: 0.5rem;
+}
+
+input, select, textarea, button{
+    box-shadow: none !important;
+}
+
+input:focus, select:focus, textarea:focus{
+    border-color: var(--color-primary) !important;
+}
+
+a{
+    outline: none !important;
+    text-decoration: none !important;
+}
+
+/* iconos del footer */
+ul.categorias i{
+    display: block;
+    font-size: 4rem !important;
+    padding: 1rem 0;
+}
+
+a i.fab{   
+    font-size: 2.5rem !important;
+}
+
+.btn{
+    border-radius: 0.25rem !important;
+    color: #212529 !important;
+    text-transform: uppercase;
+    font-weight: 600;
+    position: relative;
+    box-shadow: 2px 2px 0px var(--color-secondary) !important;
+    transition: box-shadow 0.2s linear;
+}
+
+.btn:hover{
+    box-shadow: 4px 4px 0px var(--color-secondary) !important;
+}
+
+.bg-primary{
+    background-color: var(--color-primary) !important;
+}
+
+hr{
+    display: inline-block !important;
+    width: 4rem; 
+    height: 2px;
+    background-color: var(--color-primary); 
+    border-top: var(--color-primary) solid;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 1.5rem;
+    margin-top: 0;
+}
+
+a.nav-link.hover,
+a.nav-link.active{
+    /* color: var(--color-primary) !important; */
+    font-weight: 600 !important;
+}
+
+.galeria-productos{
+    gap: 0.25rem;
+}
+
+.galeria-productos .img-thumbnail{
+    width: 56px;
+    height: auto;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: border 0.2s linear;
+}
+
+.galeria-productos .img-thumbnail:hover,
+.galeria-productos .img-thumbnail:focus,
+.galeria-productos .img-thumbnail.active{
+    border: 1px solid var(--color-primary);
+}
+
+.product-main-image {
+    aspect-ratio: 1; /* https://caniuse.com/?search=aspect-ratio me tira bien */
+    max-height: 400px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-fit: cover;
+}
+
+.card-img-top{
+    object-fit: cover;
+}
+
+.small-image{
+    width: 64px !important;
+    height: 64px !important;
+    object-fit: cover;
+}
