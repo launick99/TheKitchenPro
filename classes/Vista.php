@@ -19,7 +19,10 @@ class Vista
         $this->seccion = $seccion;
         $this->validarVista();
     }
-    //----- ----- Getters ----- ----- //
+    
+    /* ----------------------------------
+     |  Getters
+     ---------------------------------- */
     public function getSeccion()
     {
         return $this->seccion;
@@ -37,7 +40,9 @@ class Vista
         return $this->title;
     }
 
-    //----- ----- Setters ----- ----- //
+    /* ----------------------------------
+     |  Setters
+     ---------------------------------- */
     public function setSeccion($seccion)
     {
         $this->seccion = $seccion;
@@ -57,8 +62,15 @@ class Vista
         $this->title = $title;
     }
 
-    //----- ----- Funciones ----- ----- //
-    private function validarVista()
+    /* ----------------------------------
+     |  Métodos
+     ---------------------------------- */
+
+    /**
+     * Valida la sección solicitada y establece la vista y el título correspondientes.
+     * Si la sección no es válida, establece una vista de error 404.
+     */
+    private function validarVista(): void
     {
 
         if (array_key_exists($this->seccion, $this->rutas)) {
@@ -70,7 +82,13 @@ class Vista
         }
     }
 
-    public static function isActive($actual, $target)
+    /**
+     * Verifica si la sección actual coincide con la sección objetivo.
+     * @param string $actual La sección actual.
+     * @param string $target La sección objetivo.
+     * @return bool True si coinciden, false en caso contrario.
+     */
+    public static function isActive($actual, $target): bool
     {
         return $actual == $target;
     }

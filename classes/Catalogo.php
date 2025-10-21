@@ -3,6 +3,9 @@
 require_once 'Producto.php';
 
 class Catalogo {
+    /**
+     * @var array Lista de productos en el catálogo.
+     */
     private array $productos;
 
     public function __construct(string $rutaJSON) {
@@ -21,6 +24,12 @@ class Catalogo {
         }
     }
 
+    /**
+     * Normaliza un texto convirtiéndolo a minúsculas,
+     * reemplazando acentos y espacios por guiones bajos.
+     * @param string $texto El texto a normalizar.
+     * @return string El texto normalizado.
+     */
     private function normalizarTexto(string $texto): string {
         $texto = strtolower($texto);
         $acentos = ['á', 'é', 'í', 'ó', 'ú', 'ñ'];
@@ -58,19 +67,26 @@ class Catalogo {
         return $categorias ?? [];
     }
 
+    /**
+     * Filtra los productos por una o más categorías.
+     * @param array|string $categoria La categoría o categorías para filtrar.
+     * @return array Lista de productos que pertenecen a las categorías especificadas.
+     */
     public function filtrarPorCategoria(array|string $categoria): array {
+        // TODO: Recibir solamente un array
         $categorias = is_array($categoria) ? $categoria : [$categoria];
         $producto = $this->productos;
-        // var_dump($categorias);
         $productos = array_filter($producto, function($producto) use ($categorias) {
             $categoria = $this->normalizarTexto($producto->getCategoria());
-            // var_dump($categoria);
             return in_array($categoria, $categorias);
         });
-        // var_dump($productos);
         return $productos;
     }
 
+    /**
+     * Filtra los productos que tienen un stock mayor o igual al mínimo especificado.
+     * @param int $minimo El stock mínimo.
+     */
     public function filtrarPorStockMinimo(int $minimo): array {
         return array_filter($this->productos, function($producto) use ($minimo) {
             return $producto->getStock() >= $minimo;

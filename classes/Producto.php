@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * Clase que representa un producto en el catálogo.
+ */
 class Producto {
     private $id;
     private $nombre;
@@ -22,7 +26,9 @@ class Producto {
         $this->setData($data['datos_tecnicos'] ?? []);
     }
 
-    //----- ----- Getters ----- ----- //
+    /* ----------------------------------
+     |  Getters
+     ---------------------------------- */
     public function getId(){ 
         return $this->id; 
     }
@@ -56,7 +62,10 @@ class Producto {
         return $this->getData()['imagenes'] ?? [];
     }
 
-    //----- ----- Setters ----- ----- //
+    /* ----------------------------------
+     |  Setters
+     ---------------------------------- */
+
     public function setId($id){ 
         $this->id = $id; 
     }
@@ -89,21 +98,40 @@ class Producto {
     }   
 
 
-    //----- ----- Funciones ----- ----- //
+    /* ----------------------------------
+     |  Métodos
+     ---------------------------------- */
 
+    /**
+     * Formatea el precio del producto en formato monetario.
+     * @return string El precio formateado.
+     */
     public function formatearPrecio(): string{
         return '$'.number_format($this->precio, 2, ',', '.');
     }
 
-    public function estaDisponible(){
+    /**
+     * Verifica si el producto está disponible en stock.
+     * @return bool True si el stock es mayor a 0, false en caso contrario
+     */
+    public function estaDisponible(): bool{
         return $this->stock > 0;
     }
 
-    public function obtenerFechaFormateada(){
+    /**
+     * Obtiene la fecha de ingreso del producto en formato 'd/m/Y'.
+     * @return string La fecha formateada.
+     */
+    public function obtenerFechaFormateada(): string {
         return $this->fechaIngreso->format('d/m/Y');
     }
 
-    public function getDescripcionCorta(){
+    /**
+     * Obtiene una versión corta de la descripción del producto.
+     * Si la descripción tiene más de 100 caracteres, se trunca y se añade '...'.
+     * @return string La descripción corta del producto.
+     */
+    public function getDescripcionCorta(): string{
         if(strlen($this->descripcion) >= 100) {
             return substr($this->descripcion, 0, 100) . '...';
         }
