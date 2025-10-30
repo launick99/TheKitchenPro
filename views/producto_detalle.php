@@ -1,6 +1,4 @@
 <?php
-    require_once 'classes/Catalogo.php';
-
     $catalogo = new Catalogo('datos/productos.json');
 
     $id = $_GET['id'] ?? null;

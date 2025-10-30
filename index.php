@@ -1,5 +1,6 @@
 <?php
     require_once 'classes/Vista.php';
+    require_once 'functions/autoload.php';
 
     $seccion = $_GET['section'] ?? 'inicio';
 

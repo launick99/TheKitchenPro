@@ -1,7 +1,4 @@
 <?php
-
-require_once 'Producto.php';
-
 class Catalogo {
     /**
      * @var array Lista de productos en el catálogo.
