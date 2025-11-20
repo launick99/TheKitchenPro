@@ -4,12 +4,12 @@ class Vista
 {
     private $seccion;
     private $rutas = [
-        'inicio' => ['view' => 'views/home.php', 'title' => 'Inicio'],
-        'catalogo' => ['view' => 'views/catalogo.php', 'title' => 'Catalogo'],
-        'detalle' => ['view' => 'views/producto_detalle.php', 'title' => 'Producto'],
-        'contacto' => ['view' => 'views/contacto/contacto.php', 'title' => 'Contacto'],
-        'alumno' => ['view' => 'views/alumno/alumno.php', 'title' => 'Alumno'],
-        'gracias' => ['view' => 'views/contacto/gracias.php', 'title' => 'Gracias!'],
+        'inicio' =>     ['view' => 'views/home.php',                'title' => 'Inicio'     ],
+        'catalogo' =>   ['view' => 'views/catalogo.php',            'title' => 'Catalogo'   ],
+        'detalle' =>    ['view' => 'views/producto_detalle.php',    'title' => 'Producto'   ],
+        'contacto' =>   ['view' => 'views/contacto/contacto.php',   'title' => 'Contacto'   ],
+        'alumno' =>     ['view' => 'views/alumno/alumno.php',       'title' => 'Alumno'     ],
+        'gracias' =>    ['view' => 'views/contacto/gracias.php',    'title' => 'Gracias!'   ],
     ];
     private $view;
     private $title;
@@ -21,8 +21,8 @@ class Vista
     }
     
     /* ----------------------------------
-     |  Getters
-     ---------------------------------- */
+    |  Getters
+    +---------------------------------- */
     public function getSeccion()
     {
         return $this->seccion;
@@ -41,8 +41,8 @@ class Vista
     }
 
     /* ----------------------------------
-     |  Setters
-     ---------------------------------- */
+    |  Setters
+    +---------------------------------- */
     public function setSeccion($seccion)
     {
         $this->seccion = $seccion;
@@ -63,8 +63,8 @@ class Vista
     }
 
     /* ----------------------------------
-     |  Métodos
-     ---------------------------------- */
+    |  Métodos
+    +---------------------------------- */
 
     /**
      * Valida la sección solicitada y establece la vista y el título correspondientes.

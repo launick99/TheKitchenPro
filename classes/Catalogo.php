@@ -83,6 +83,7 @@ class Catalogo {
     /**
      * Filtra los productos que tienen un stock mayor o igual al mínimo especificado.
      * @param int $minimo El stock mínimo.
+     * @return array Lista de productos que cumplen con el criterio de stock mínimo.
      */
     public function filtrarPorStockMinimo(int $minimo): array {
         return array_filter($this->productos, function($producto) use ($minimo) {

@@ -27,8 +27,8 @@ class Producto {
     }
 
     /* ----------------------------------
-     |  Getters
-     ---------------------------------- */
+    |  Getters
+    +---------------------------------- */
     public function getId(){ 
         return $this->id; 
     }
@@ -63,8 +63,8 @@ class Producto {
     }
 
     /* ----------------------------------
-     |  Setters
-     ---------------------------------- */
+    |  Setters
+    +---------------------------------- */
 
     public function setId($id){ 
         $this->id = $id; 
@@ -99,8 +99,8 @@ class Producto {
 
 
     /* ----------------------------------
-     |  Métodos
-     ---------------------------------- */
+    |  Métodos
+    +---------------------------------- */
 
     /**
      * Formatea el precio del producto en formato monetario.

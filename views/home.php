@@ -5,7 +5,7 @@
     <!-- estaria bueno otro nombre -->
     <h2 class="text-center mb-4">¡Bienvenido a The Kitchen Pro!</h2>
     <p>
-        En <strong>The Kitchen Pro</strong>, estamos dedicados a proporcionarte los mejores productos para que 
+        En <strong lang="en">The Kitchen Pro</strong>, estamos dedicados a proporcionarte los mejores productos para que 
         tu experiencia en la cocina sea tanto eficiente como placentera. Desde utensilios básicos hasta los 
         electrodomésticos más avanzados, nuestro objetivo es ofrecerte una variedad de productos de alta calidad 
         que se adapten a tus necesidades. Fundada con la pasión por el arte culinario, nuestra empresa ha trabajado 
