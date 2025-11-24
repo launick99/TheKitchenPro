@@ -4,9 +4,9 @@
  * Clase para manejar la conección a la DB
  * @method getConnection Obtener conexión a la base de datos
  */
-class Connection{
+class Conexion{
     protected const DB_HOST = DB_HOST;
-    protected const DB_NAME = DB_USER;
+    protected const DB_NAME = DB_NAME;
     protected const DB_USER = DB_USER;
     protected const DB_PASS = DB_PASS;
 

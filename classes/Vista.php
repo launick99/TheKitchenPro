@@ -10,6 +10,7 @@ class Vista
         'contacto' =>   ['view' => 'views/contacto/contacto.php',   'title' => 'Contacto'   ],
         'alumno' =>     ['view' => 'views/alumno/alumno.php',       'title' => 'Alumno'     ],
         'gracias' =>    ['view' => 'views/contacto/gracias.php',    'title' => 'Gracias!'   ],
+        'login' =>      ['view' => 'views/autorizacion/login.php',  'title' => 'Iniciar Sesion'   ],
     ];
     private $view;
     private $title;
