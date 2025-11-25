@@ -1,5 +1,7 @@
 <?php
 
+require_once '../classes/Conexion.php';
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }

@@ -32,7 +32,6 @@
         <main class="flex-grow-1">
             <?php 
                 try {
-                    // $asd = 1 / 0;
                     include_once($ubicacion); 
                 } catch (\Throwable $error) {
                     include_once('views/error/500.php'); 

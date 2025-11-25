@@ -7,8 +7,7 @@
     <div class="container-fluid my-5">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="d-none d-md-block col-md-9 col-lg-6 col-xl-5">
-                <img src="assets/img/login.jpg" style="max-width: 360px;"
-                    class="img-fluid" alt="algo de cocina">
+                <img class="rounded mx-auto d-block" style="max-width: 512px;" src="./assets/img/comida.webp" alt="The Kitchen Pro, el mundo de la cocina">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                 <h2>Iniciar Sesion</h2>

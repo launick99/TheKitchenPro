@@ -18,7 +18,7 @@ class Usuario
      * @return Usuario|null
      */
     public function findByUsername(string $usuario): self{
-        $conection = (new Conexion())->getConexion();
+        $conection = Conexion::getConexion();
         $query = "SELECT * FROM {$this->tabla} WHERE nombre_usuario = :usuario LIMIT 1";
 
         $PDOStatement = $conection->prepare($query);
