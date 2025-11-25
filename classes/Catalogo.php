@@ -5,21 +5,13 @@ class Catalogo {
      */
     private array $productos;
 
-    public function __construct(string $rutaJSON) {
-        $this->productos = [];
-
-        if (file_exists($rutaJSON)) {
-            $json = file_get_contents($rutaJSON);
-            $datos = json_decode($json, true);
-
-            if (is_array($datos)) {
-                foreach ($datos as $productoData) {
-                    $producto = new Producto($productoData);
-                    $this->productos[] = $producto;
-                }
-            }
-        }
+    public function __construct() {
+        $this->productos = (new Producto())->getTodos();
     }
+
+    /* ----------------------------------
+    |  Métodos
+    +---------------------------------- */
 
     /**
      * Normaliza un texto convirtiéndolo a minúsculas,
@@ -42,15 +34,10 @@ class Catalogo {
         return $this->productos;
     }
 
-    public function getById(int $id): ?Producto {
-        foreach ($this->productos as $producto) {
-            if ($producto->getId() === $id) {
-                return $producto;
-            }
-        }
-        return null;
-    }
-
+    /**
+     * Obtiene una lista de categorías únicas de los productos en el catálogo.
+     * @return array Lista de categorías únicas.
+     */
     public function getCategorias(): Array {
         $categorias = [];
     
@@ -63,15 +50,12 @@ class Catalogo {
         sort($categorias);
         return $categorias ?? [];
     }
-
     /**
      * Filtra los productos por una o más categorías.
-     * @param array|string $categoria La categoría o categorías para filtrar.
+     * @param array $categoria La categoría o categorías para filtrar.
      * @return array Lista de productos que pertenecen a las categorías especificadas.
      */
-    public function filtrarPorCategoria(array|string $categoria): array {
-        // TODO: Recibir solamente un array
-        $categorias = is_array($categoria) ? $categoria : [$categoria];
+    public function filtrarPorCategoria(array $categorias): array {
         $producto = $this->productos;
         $productos = array_filter($producto, function($producto) use ($categorias) {
             $categoria = $this->normalizarTexto($producto->getCategoria());

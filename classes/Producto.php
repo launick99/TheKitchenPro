@@ -4,27 +4,17 @@
  * Clase que representa un producto en el catálogo.
  */
 class Producto {
-    private $id;
-    private $nombre;
-    private $descripcion;
-    private $precio;
-    private $stock;
-    private $categoria;
-    private $fechaIngreso;
-    private $data;
-    private $imagen;
+    protected $tabla = 'producto';
 
-    public function __construct($data) {
-        $this->setId($data['id']);
-        $this->setNombre($data['nombre']);
-        $this->setDescripcion($data['descripcion']);
-        $this->setPrecio($data['precio']);
-        $this->setStock($data['stock']);
-        $this->setCategoria($data['categoria']);
-        $this->setImagen($data['imagen'] ? './assets/img/productos' . $data['imagen'] : '');
-        $this->setFechaIngreso($data['fechaIngreso']);
-        $this->setData($data['datos_tecnicos'] ?? []);
-    }
+    protected $id;
+    protected $nombre;
+    protected $descripcion;
+    protected $precio;
+    protected $stock;
+    protected $fechaIngreso;
+    protected $activo;
+    protected $data;
+    protected $imagen;
 
     /* ----------------------------------
     |  Getters
@@ -44,63 +34,82 @@ class Producto {
     public function getStock(){ 
         return $this->stock; 
     }
-    public function getCategoria(){ 
-        return $this->categoria; 
-    }
     public function getFechaIngreso(){ 
         return $this->fechaIngreso; 
     }
     public function getImagen(){ 
-        return $this->imagen; 
+        return 'assets/img/productos/'.$this->imagen; 
     }
-
-    public function getData(){
-        return $this->data ?? [];
-    }
-
-    public function getImagenes() {
-        return $this->getData()['imagenes'] ?? [];
+    public function getActivo(){
+        return $this->activo;
     }
 
     /* ----------------------------------
     |  Setters
     +---------------------------------- */
 
-    public function setId($id){ 
+    public function setId(int $id){ 
         $this->id = $id; 
     }
-    public function setNombre($nombre){ 
+    public function setNombre(string $nombre){ 
         $this->nombre = $nombre; 
     }
-    public function setDescripcion($descripcion){ 
+    public function setDescripcion(string $descripcion){ 
         $this->descripcion = $descripcion; 
     }
-    public function setPrecio($precio){
+    public function setPrecio(float $precio){
         if (!is_numeric($precio) || $precio < 0) {
             throw new Exception("El precio no es válido");
         }
         $this->precio = $precio;
     }
-    public function setStock($stock){
+    public function setStock(int $stock){
         $this->stock = $stock;
     }
-    public function setCategoria($categoria){
-        $this->categoria = $categoria;
-    }
-    public function setFechaIngreso($fecha){
+    public function setFechaIngreso(string $fecha){
         $this->fechaIngreso = new DateTime($fecha);
     }
-    public function setImagen($imagen){ 
+    public function setImagen(string $imagen){ 
         return $this->imagen = $imagen; 
     }
-    public function setData($data){
+    public function setData(string $data){
         $this->data = $data;
     }   
-
 
     /* ----------------------------------
     |  Métodos
     +---------------------------------- */
+
+    public function getCategoria(){
+        return "";
+    }
+
+    /**
+     * Obtiene todos los productos desde la base de datos.
+     * @return array Lista de productos.
+     */
+    public function getTodos(): array {
+        $connection = (new Conexion)->getConexion();
+        $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla}");
+        $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStatement->execute();
+
+        return $PDOStatement->fetchAll();
+    }
+
+    /**
+     * Obtiene un producto por su ID desde la base de datos.
+     * @param int $id El ID del producto.
+     * @return Producto|null El producto si se encuentra
+     */
+    public function getProductById(int $id): ?self{
+        $connection = (new Conexion)->getConexion();
+        $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla} WHERE id = :id");
+        $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStatement->execute(['id' => $id]);
+
+        return $PDOStatement->fetch() ?? null;
+    }
 
     /**
      * Formatea el precio del producto en formato monetario.
