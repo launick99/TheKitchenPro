@@ -1,4 +1,4 @@
-<section class="container mb-2" id="contacto">
+<section class="container my-5" id="contacto">
     <h2 class="text-center mb-4">Contacto</h2>
     <p>¡Nos encanta saber de ti! Rellena el formulario y cuéntanos todo lo que necesitas.</p>
     <form action="?section=gracias" method="post">

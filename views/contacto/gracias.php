@@ -35,7 +35,7 @@
 ?>
 
 <?php if(!empty($errores)): ?>
-    <div class="container mt-4">
+    <div class="container my-5">
         <div class="alert alert-danger">
             <h5 class="alert-heading">Se encontraron errores en el formulario:</h5>
             <ul class="mb-3">
@@ -43,7 +43,7 @@
                     <li><?= $e ?></li>
                 <?php endforeach; ?>
             </ul>
-            <a href="index.php?sec=contacto" class="btn btn-warning">Volver</a>
+            <a href="index.php?section=contacto" class="btn btn-warning">Volver</a>
         </div>
     </div>
 <?php else: ?>
