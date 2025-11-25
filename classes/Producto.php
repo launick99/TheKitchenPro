@@ -10,37 +10,35 @@ class Producto {
     protected $nombre;
     protected $descripcion;
     protected $precio;
-    protected $stock;
     protected $fechaIngreso;
     protected $activo;
-    protected $data;
     protected $imagen;
 
     /* ----------------------------------
     |  Getters
     +---------------------------------- */
-    public function getId(){ 
+    public function getId(): int{ 
         return $this->id; 
     }
-    public function getNombre(){ 
+    public function getNombre(): string{ 
         return $this->nombre; 
     }
-    public function getDescripcion(){ 
+    public function getDescripcion(): string{ 
         return $this->descripcion; 
     }
-    public function getPrecio(){ 
+    public function getPrecio(): float{ 
         return $this->precio; 
     }
-    public function getStock(){ 
-        return $this->stock; 
-    }
-    public function getFechaIngreso(){ 
+    public function getFechaIngreso(): string{ 
         return $this->fechaIngreso; 
     }
-    public function getImagen(){ 
-        return 'assets/img/productos/'.$this->imagen; 
+    /**
+     * Devuelve la url de la imagen del prodycto o una por defecto si no existe
+     */
+    public function getImagen(): string{ 
+        return $this->imagen ?? 'https://nftcalendar.io/storage/uploads/2022/02/21/image-not-found_0221202211372462137974b6c1a.png'; 
     }
-    public function getActivo(){
+    public function getActivo(): bool{
         return $this->activo;
     }
 
@@ -63,18 +61,35 @@ class Producto {
         }
         $this->precio = $precio;
     }
-    public function setStock(int $stock){
-        $this->stock = $stock;
-    }
     public function setFechaIngreso(string $fecha){
         $this->fechaIngreso = new DateTime($fecha);
     }
     public function setImagen(string $imagen){ 
         return $this->imagen = $imagen; 
     }
-    public function setData(string $data){
-        $this->data = $data;
-    }   
+
+    /* ----------------------------------
+    |  Relaciones
+    +---------------------------------- */
+
+    /**
+     * Obtiene todas las imágenes asociadas al producto.
+     * @return array Lista de URLs de imágenes.
+     */
+    public function getImagenes(): ?array {
+        $productoImagenes = new ProductoImagenes();
+        return $productoImagenes->getByProductoId($this->id);
+    }
+
+    public function getDatosTecnicos(): ?array{
+        $datosTecnicos = new DatosTecnicos();
+        return $datosTecnicos->getByProductoId($this->id);
+    }
+
+    public function getStock(): ?Stock{
+        $stock = new Stock();
+        return $stock->getByProductoId($this->id);
+    }
 
     /* ----------------------------------
     |  Métodos
@@ -124,7 +139,11 @@ class Producto {
      * @return bool True si el stock es mayor a 0, false en caso contrario
      */
     public function estaDisponible(): bool{
-        return $this->stock > 0;
+        $stock = $this->getStock();
+        if(!$stock){
+            return false;
+        }
+        return $stock->tieneStock();
     }
 
     /**

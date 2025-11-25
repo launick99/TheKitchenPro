@@ -1,8 +1,6 @@
 <?php
-    $catalogo = new Catalogo('datos/productos.json');
-
     $id = $_GET['id'] ?? null;
-    $producto = $catalogo->getById($id);
+    $producto = (new Producto())->getProductById($id);
 
     if (!$producto) {
         echo "<div class='alert alert-danger'>Producto no encontrado.</div>";
@@ -15,8 +13,8 @@
     $descripcion = $producto->getDescripcion();
     $precio = $producto->formatearPrecio();
     $imagen = $producto->getImagen();
-    $imagenes = $producto->getImagenes() ?? [];
-    $data = $producto->getData() ?? [];
+    $imagenes = $producto->getImagenes() ?? "";
+    $datos = $producto->getDatosTecnicos() ?? [];
 ?>
 <main class="container my-5">
     <div class="row">
@@ -28,7 +26,7 @@
             <div class="d-flex flex-wrap galeria-productos py-1">
                 <img class="img-thumbnail active small-image" src="<?= $imagen ?>" alt="Imagen principal del producto" onclick="changeImage(this)">
                 <?php foreach ($imagenes as $img): ?>
-                    <img src="<?= $img ?>" alt="<?= $nombre ?>" class="img-thumbnail small-image" onclick="changeImage(this)">
+                    <img src="<?= $img->getUrl() ?>" alt="<?= $nombre ?>" class="img-thumbnail small-image" onclick="changeImage(this)">
                 <?php endforeach; ?>
             </div>
         </div>
@@ -53,16 +51,14 @@
         </div>
     </div>
 
-    <?php if (!empty($data)): ?>
+    <?php if (!empty($datos)): ?>
         <section class="mt-5">
             <h3>Datos Técnicos</h3>
             <ul class="list-group">
-                <?php foreach ($data as $c => $valor): ?>
-                    <?php if ($c != 'imagenes'): ?>
-                        <li class="list-group-item">
-                            <span class="fw-bold"><?= $c ?>:</span> <?= $valor ?>
-                        </li>
-                    <?php endif; ?>
+                <?php foreach ($datos as $c => $valor): ?>
+                    <li class="list-group-item">
+                        <span class="fw-bold"><?= $valor->getClave() ?>:</span> <?= $valor->getValor() ?>
+                    </li>
                 <?php endforeach; ?>
             </ul>
         </section>
