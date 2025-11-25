@@ -1,66 +1,74 @@
 <?php
 
-class Vista
-{
-    private $seccion;
-    private $rutas = [
-        'inicio' =>     ['view' => 'views/home.php',                'title' => 'Inicio'     ],
-        'catalogo' =>   ['view' => 'views/catalogo.php',            'title' => 'Catalogo'   ],
-        'detalle' =>    ['view' => 'views/producto_detalle.php',    'title' => 'Producto'   ],
-        'contacto' =>   ['view' => 'views/contacto/contacto.php',   'title' => 'Contacto'   ],
-        'alumno' =>     ['view' => 'views/alumno/alumno.php',       'title' => 'Alumno'     ],
-        'gracias' =>    ['view' => 'views/contacto/gracias.php',    'title' => 'Gracias!'   ],
-        'login' =>      ['view' => 'views/autorizacion/login.php',  'title' => 'Iniciar Sesion'   ],
-    ];
-    private $view;
-    private $title;
+class Vista{
 
-    public function __construct($seccion)
-    {
-        $this->seccion = $seccion;
-        $this->validarVista();
-    }
-    
+    protected $tabla = 'vistas';
+
+    protected $id;
+    protected $nombre;
+    protected $titulo;
+    protected $ubicacion;
+    protected $activa;
+    protected $restringido;
+
+    /**
+     * @var string Ubicación base de las vistas
+     */
+    const UBICACION = 'views/';
+
     /* ----------------------------------
     |  Getters
     +---------------------------------- */
-    public function getSeccion()
-    {
-        return $this->seccion;
+    public function getId(): int{
+        return $this->id;
     }
-    public function getRutas()
-    {
-        return $this->rutas;
+    public function getNombre(): string{
+        return $this->nombre;
     }
-    public function getView()
-    {
-        return $this->view;
+    /**
+     * Obtiene la ubicacion completa de la vista
+     */
+    public function getUbicacion(): string{
+        return self::UBICACION.$this->ubicacion;
     }
-    public function getTitle()
-    {
-        return $this->title;
+    public function getTitulo(): string{
+        return $this->titulo;
+    }
+    public function getRestringido(): bool{
+        return $this->restringido;
+    }
+    public function getActiva(): bool{
+        return $this->activa;
     }
 
     /* ----------------------------------
     |  Setters
     +---------------------------------- */
-    public function setSeccion($seccion)
-    {
-        $this->seccion = $seccion;
-        $this->validarVista();
+    public function setId(int $id): void{
+        $this->id = $id;
     }
-    public function setRutas(array $rutas)
-    {
-        $this->rutas = $rutas;
-        $this->validarVista();
+    public function setNombre(string $nombre): void{
+        $this->nombre = $nombre;
     }
-    public function setView($view)
-    {
-        $this->view = $view;
+    /**
+     * Establece la ubicación de la vista
+     * @param string $ubicacion
+     * @throws Exception Si el archivo de la vista no existe
+     */
+    public function setUbicacion(string $ubicacion): void{
+        if(!$this->vistaExiste($ubicacion)){
+            throw new Exception("La vista no existe: " . $ubicacion);
+        }
+        $this->ubicacion = $ubicacion;
     }
-    public function setTitle($title)
-    {
-        $this->title = $title;
+    public function setTitulo(string $titulo): void{
+        $this->titulo = $titulo;
+    }
+    public function SetRestringido(bool $restringido): void{
+        $this->restringido = $restringido;
+    }
+    public function SetActiva(bool $activa): void{
+        $this->activa = $activa;
     }
 
     /* ----------------------------------
@@ -68,20 +76,81 @@ class Vista
     +---------------------------------- */
 
     /**
+     * Verifica que exista el archivo de la ruta
+     * @param string $ubicacion
+     * @return bool
+     */
+    private function vistaExiste(string $ubicacion): bool{
+        return file_exists(Self::UBICACION.$ubicacion);
+    }
+
+    /**
+     * Vista por defecto cuando no se encuentra la sección
+     * @return self 404
+     */
+    private function vistaNoEncontrada(): self{
+        $vista = new self();
+        $this->setUbicacion('error/404.php');
+        $this->setTitulo("404 - Página no encontrada");
+        $this->SetRestringido(false);
+        $this->SetActiva(true);
+        return $this;
+    }
+
+    /**
+     * Vista por defecto cuando no se encuentra la sección
+     * @return self 404
+     */
+    private function vistaNoDispobible(): self{
+        $vista = new self();
+        $this->setUbicacion('error/403.php');
+        $this->setTitulo("403 - Página no disponible :(");
+        $this->SetRestringido(false);
+        $this->SetActiva(true);
+        return $this;
+    }
+
+    /**
+     * Vista no autorizada
+     * @return self 403
+     */
+    private function vistaNoAutorizada(): self{
+        $vista = new self();
+        $this->setUbicacion('error/403.php');
+        $this->setTitulo("403 - Página no accesible");
+        $this->SetRestringido(true);
+        $this->SetActiva(true);
+        return $this;
+    }
+
+
+    /**
      * Valida la sección solicitada y establece la vista y el título correspondientes.
      * Si la sección no es válida, establece una vista de error 404.
      */
-    private function validarVista(): void
-    {
+    public function validarVista(string $nombre): self{
+        $conexion = (new Conexion())->getConexion();
+        $query = "SELECT * FROM {$this->tabla} WHERE nombre = :nombre LIMIT 1";
+        $PDOStatement = $conexion->prepare($query);
+        $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStatement->execute([ 'nombre' => $nombre]);
 
-        if (array_key_exists($this->seccion, $this->rutas)) {
-            $this->view = $this->rutas[$this->seccion]['view'];
-            $this->title = $this->rutas[$this->seccion]['title'];
-        } else {
-            $this->view = 'views/errors/404.php';
-            $this->title = 'Página no encontrada';
+        $vista = $PDOStatement->fetch();
+
+        if($vista){
+            if(!$vista->getActiva()){
+                return $this->vistaNoDispobible();
+            }
+            if(!$vista->getRestringido()){
+                return $vista;
+            }else{
+                return $this->vistaNoAutorizada();
+            }
         }
+
+        return $this->vistaNoEncontrada();
     }
+
 
     /**
      * Verifica si la sección actual coincide con la sección objetivo.

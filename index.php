@@ -3,11 +3,10 @@
     require_once 'functions/Autoload.php';
 
     $seccion = $_GET['section'] ?? 'inicio';
+    $vista = (new Vista())->validarVista($seccion);
 
-    $vista = new Vista($seccion);
-
-    $view = $vista->getView();
-    $pageTitle = $vista->getTitle();
+    $ubicacion = $vista->getUbicacion();
+    $pageTitle = $vista->getTitulo();
 
     if (session_status() == PHP_SESSION_NONE) {
         isset($_SESSION) ? '' : session_start();
@@ -34,7 +33,7 @@
             <?php 
                 try {
                     // $asd = 1 / 0;
-                    include_once($view); 
+                    include_once($ubicacion); 
                 } catch (\Throwable $error) {
                     include_once('views/errors/500.php'); 
                 }

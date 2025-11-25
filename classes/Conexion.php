@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/Database.php';
 
 /**
  * Clase para manejar la conección a la DB
@@ -19,7 +20,7 @@ class Conexion{
      * @return PDO
      * @throws Exception Si no se puede conectar a la base de datos
      */
-    public function getConnection(): PDO{
+    public function getConexion(): PDO{
         try {
             $this->db = new PDO(self::DB_DSN, self::DB_USER, self::DB_PASS);
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
