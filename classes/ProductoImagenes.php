@@ -56,7 +56,7 @@ class ProductoImagenes {
      * @return self|null Lista de imágenes o null
      */
     public function getByProductoId(int $productoId): ?array {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $query = "SELECT * FROM {$this->tabla} WHERE producto_id = :id";
 
         $PDOStatement = $connection->prepare($query);
@@ -70,7 +70,7 @@ class ProductoImagenes {
      * Obtiene una imagen por su ID.
      */
     public function getById(int $id): ?self {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $query = "SELECT * FROM {$this->tabla} WHERE id = :id";
         $PDOStatement = $connection->prepare($query);
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
@@ -82,7 +82,7 @@ class ProductoImagenes {
      * Inserta un nuevo registro de imagen.
      */
     public function crear(): bool {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $query = "INSERT INTO {$this->tabla} (producto_id, url, activo)
                   VALUES (:producto_id, :url, :activo)";
         $PDOStatement = $connection->prepare($query);
@@ -98,7 +98,7 @@ class ProductoImagenes {
      * Actualiza la imagen existente.
      */
     public function actualizar(): bool {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $query = "UPDATE {$this->tabla}
                   SET url = :url, activo = :activo
                   WHERE id = :id";
@@ -118,7 +118,7 @@ class ProductoImagenes {
     public function desactivar(): bool {
         $this->activo = 0;
 
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $query = "UPDATE {$this->tabla} SET activo = 0 WHERE id = :id";
 
         $PDOStatement = $connection->prepare($query);
@@ -130,7 +130,7 @@ class ProductoImagenes {
      * Borra una imagen de la base de datos.
      */
     public function eliminar(): bool {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $query = "DELETE FROM {$this->tabla} WHERE id = :id";
 
         $PDOStatement = $connection->prepare($query);

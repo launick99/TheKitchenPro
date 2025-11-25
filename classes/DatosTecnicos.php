@@ -54,7 +54,7 @@ class DatosTecnicos {
      * Obtiene todos los datos técnicos de un producto.
      */
     public function getByProductoId(int $productoId): array {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla} WHERE producto_id = :id");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute(['id' => $productoId]);

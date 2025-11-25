@@ -63,7 +63,7 @@ class Stock {
      * @return ?self El objeto Stock o null si no se encuentra.
      */
     public function getByProductoId(int $id): ?self {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $query = "SELECT * FROM {$this->tabla} WHERE producto_id = :id";
         $PDOStatement = $connection->prepare($query);
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);

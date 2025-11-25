@@ -18,7 +18,7 @@ class UserRol
      */
     public function hasRol(int $user_id, int $rol): bool
     {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla} WHERE user_id = :user AND rol_id = :rol LIMIT 1");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute(['user_id' => $user_id, 'rol' => $rol]);

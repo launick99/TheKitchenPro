@@ -104,7 +104,7 @@ class Producto {
      * @return array Lista de productos.
      */
     public function getTodos(): array {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla}");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute();
@@ -118,7 +118,7 @@ class Producto {
      * @return Producto|null El producto si se encuentra
      */
     public function getProductById(int $id): ?self{
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla} WHERE id = :id");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute(['id' => $id]);
@@ -137,7 +137,7 @@ class Producto {
      * @return array Lista de objetos Producto filtrados.
      */
     public function filtrarProductos(?string $buscar = null, ?array $categorias = null, ?array $rangoPrecio = null, bool $soloConStock = false): array {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $query = [];
         $parametros = [];
 

@@ -10,7 +10,8 @@
         '35000-45000'       => '$35.000 a $45.000',
         '45000-100000000'   => 'Más de $45.000',
     ];
-    $rango = $_GET['rango']? explode('-', $_GET['rango']) : null;
+
+    $rango = isset($_GET['rango']) ? explode('-', $_GET['rango']) : [];
     $stock = $_GET['stock'] ?? null;
 
     $productos = (new Producto())->filtrarProductos(

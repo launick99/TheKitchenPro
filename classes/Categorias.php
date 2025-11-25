@@ -45,7 +45,7 @@ class Categorias {
      * Obtiene todas las categorías.
      */
     public function getTodas(): ?array {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla}");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute();
@@ -57,7 +57,7 @@ class Categorias {
      * Obtiene las categorías activas.
      */
     public function getActivas(): ?array {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla} WHERE activa = 1");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute();
@@ -69,7 +69,7 @@ class Categorias {
      * Obtiene una categoría por ID.
      */
     public function getPorId(int $id): ?self {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla} WHERE id = :id");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute(['id' => $id]);
@@ -83,7 +83,7 @@ class Categorias {
      * Inserta una nueva categoría.
      */
     public function crear(): bool {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $PDOStatement = $connection->prepare("INSERT INTO {$this->tabla} (nombre, activa) VALUES (:nombre, :activa)");
 
         return $PDOStatement->execute([
@@ -96,7 +96,7 @@ class Categorias {
      * Actualiza la categoría existente.
      */
     public function actualizar(): bool {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $PDOStatement = $connection->prepare("UPDATE {$this->tabla} SET nombre = :nombre, activa = :activa WHERE id = :id");
 
         return $PDOStatement->execute([
@@ -111,7 +111,7 @@ class Categorias {
      */
     public function desactivar(): bool {
         $this->activa = 0;
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $PDOStatement = $connection->prepare("UPDATE {$this->tabla} SET activa = 0 WHERE id = :id");
         return $PDOStatement->execute(['id' => $this->id]);
     }
@@ -120,7 +120,7 @@ class Categorias {
      * Borra la categoría de la base de datos.
      */
     public function eliminar(): bool {
-        $connection = (new Conexion)->getConexion();
+        $connection = Conexion::getConexion();
         $PDOStatement = $connection->prepare("DELETE FROM {$this->tabla} WHERE id = :id");
         return $PDOStatement->execute(['id' => $this->id]);
     }
