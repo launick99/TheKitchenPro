@@ -13,7 +13,7 @@ class Conexion{
 
     private const DB_DSN = 'mysql:host=' . self::DB_HOST . ';dbname=' . self::DB_NAME . ';charset=utf8';
 
-    private static ?PDO $db;
+    private static ?PDO $db = null;
 
     /**
      * Conectar a la base de datos
