@@ -17,7 +17,6 @@
     $cel = limpiar($_POST['cel'] ?? '');
     $comentario = limpiar($_POST['comentario'] ?? '');
 
-    // Como en laravel
     if (empty($nombre) || strlen($nombre) < 5) {
         $errores[] = "El nombre es obligatorio y debe tener al menos 2 caracteres.";
     }
