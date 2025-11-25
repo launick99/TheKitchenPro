@@ -1,10 +1,6 @@
 <?php
-    $catalogo = new Catalogo('datos/productos.json');
-
-    $categoria = $_GET['categorias'] ?? null;
-    $min = $_GET['min'] ?? null;
-    $max = $_GET['max'] ?? null;
-    $stock = $_GET['stock'] ?? null;
+    $categorias = (new Categorias)->getActivas();
+    $categoriaSeleccionadas = $_GET['categorias'] ?? null;
 
     $rangos = [
         '0-5000'            => 'Hasta $5.000',
@@ -14,36 +10,16 @@
         '35000-45000'       => '$35.000 a $45.000',
         '45000-100000000'   => 'Más de $45.000',
     ];
+    $rango = $_GET['rango']? explode('-', $_GET['rango']) : null;
+    $stock = $_GET['stock'] ?? null;
 
-    $categoriasDisponibles = $catalogo->getCategorias();
-
-    //descomentado para los enlaces de home
-    $productos = $categoria 
-        ? $catalogo->filtrarPorCategoria($categoria)
-        : $catalogo->getTodos();   
-
-    // Filtro de búsqueda de texto
-    if (!empty($_GET['buscar'])) {
-        $busqueda = strtolower(trim($_GET['buscar']));
-        $productos = array_filter($productos, function($producto) use ($busqueda) {
-            return 
-                str_contains(strtolower($producto->getNombre()), $busqueda) ||
-                str_contains(strtolower($producto->getDescripcion()), $busqueda);
-        });
-    }
-    // Filtro de rango de precio
-    if (!empty($_GET['rango'])) {
-        [$rMin, $rMax] = explode('-', $_GET['rango']);
-        $productos = array_filter($productos, function($producto) use ($rMin, $rMax) {
-            return $producto->getPrecio() >= $rMin && $producto->getPrecio() <= $rMax;
-        });
-    }
-    // Filtro de rango de stock
-    if (!empty($_GET['stock'])) {
-        $productos = array_filter($productos, function($producto) {
-            return $producto->estaDisponible();
-        });
-    }
+    $productos = (new Producto())->filtrarProductos(
+        buscar: $_GET['buscar'] ?? null,
+        categorias: $categoriaSeleccionadas,
+        rangoPrecio: $rango,
+        soloConStock: isset($stock)
+    );
+    
 ?>
 
 <section class="container my-5" id="productos">
@@ -60,14 +36,14 @@
                 <div class="form-group mb-3">
                     <label>Categorías</label>
                     <?php
-                    foreach ($categoriasDisponibles as $id => $cat) {
-                        $id_categoria = strtolower(trim($cat));
-                        //var_dump($id_categoria);
-                        $checked = isset($_GET['categorias']) && in_array($id_categoria, $_GET['categorias']) ? 'checked' : '';
+                    foreach ($categorias as $categoria) {
+                        $id = $categoria->getId();
+                        $checked = isset($_GET['categorias']) && in_array($categoria->getId(), $_GET['categorias']) ? 'checked' : '';
+
                         echo "
                             <div class='form-check'>
-                                <input class='form-check-input' type='checkbox' name='categorias[]' value='$id_categoria' id='cat_$id_categoria' $checked>
-                                <label class='form-check-label' for='cat_$id_categoria'>" . ucwords(str_replace('_', ' ', $cat)) . "</label>
+                                <input class='form-check-input' type='checkbox' name='categorias[]' value='$id' id='cat_$id' $checked>
+                                <label class='form-check-label' for='cat_$id'>" . $categoria->getNombre() . "</label>
                             </div>
                         ";
                     }

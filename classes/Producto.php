@@ -127,6 +127,72 @@ class Producto {
     }
 
     /**
+     * Filtra productos.
+     *
+     * @param string|null $buscar Palabra clave para buscar en nombre o descripcin
+     * @param array|null $categorias IDs de categorías
+     * @param array|null $rangoPrecio Array con ['min' => float, 'max' => float].
+     * @param bool $soloConStock Si true, solo devuelve productos con stock > 0.
+     *
+     * @return array Lista de objetos Producto filtrados.
+     */
+    public function filtrarProductos(?string $buscar = null, ?array $categorias = null, ?array $rangoPrecio = null, bool $soloConStock = false): array {
+        $connection = (new Conexion)->getConexion();
+        $query = [];
+        $parametros = [];
+
+        $sql = "SELECT p.* 
+            FROM producto p
+            LEFT JOIN producto_categoria pc ON p.id = pc.producto_id
+            LEFT JOIN producto_stock s ON p.id = s.producto_id";
+
+
+        // Filtro por búsqueda
+        if ($buscar) {
+            $query[] = "(nombre LIKE :buscar OR descripcion LIKE :buscar)";
+            $parametros['buscar'] = '%' . $buscar . '%';
+        }
+
+        // Filtro por categorías
+        if ($categorias && count($categorias) > 0) {
+            $categoriaIn = [];
+            foreach ($categorias as $categoria) {
+                $categoriaIn[] = ':cat_' . $categoria;
+                $parametros[':cat_' . $categoria] = $categoria;
+            }
+            $query[] = "pc.categoria_id IN (". implode(',', $categoriaIn).")";
+        }
+
+        // Filtro por rango de precio
+        if ($rangoPrecio) {
+            if (isset($rangoPrecio[0])) {
+                $query[] = "precio >= :minPrecio";
+                $parametros['minPrecio'] = (float)$rangoPrecio[0];
+            }
+            if (isset($rangoPrecio[1])) {
+                $query[] = "precio <= :maxPrecio";
+                $parametros['maxPrecio'] = (float)$rangoPrecio[1];
+            }
+        }
+        // Filtro por stock
+        if ($soloConStock) {
+            $query[] = "s.stock > 0";
+        }
+
+        if (count($query) > 0) {
+            $sql .= " WHERE " . implode(" AND ", $query);
+        }
+
+        $sql .= " GROUP BY p.id";
+
+        $PDOStatement = $connection->prepare($sql);
+        $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStatement->execute($parametros);
+
+        return $PDOStatement->fetchAll();
+    }
+
+    /**
      * Formatea el precio del producto en formato monetario.
      * @return string El precio formateado.
      */
