@@ -18,15 +18,32 @@ class Usuario
      * @return Usuario|null
      */
     public function findByUsername(string $usuario): self{
-        $conection = Conexion::getConexion();
+        $conexion = Conexion::getConexion();
         $query = "SELECT * FROM {$this->tabla} WHERE nombre_usuario = :usuario LIMIT 1";
 
-        $PDOStatement = $conection->prepare($query);
+        $PDOStatement = $conexion->prepare($query);
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute(['usuario' => $usuario]);
 
-        $result = $PDOStatement->fetchAll();
-        return $result ? $result[0] : null;
+        $resultado = $PDOStatement->fetchAll();
+        return $resultado ? $resultado[0] : null;
+    }
+
+    /**
+     * Obtener rol por ID de usuario
+     * @param int $usuarioId
+     * @return int|null
+     */
+    public static function obtenerRolPorUsuarioId(int $usuarioId): ?int
+    {
+        $conexion = Conexion::getConexion();
+        $sql = "SELECT rol_id FROM rol_usuario WHERE usuario_id = :id LIMIT 1";
+        $PDOStatement = $conexion->prepare($sql);
+        $PDOStatement->execute(['id' => $usuarioId]);
+        $resultado = $PDOStatement->setFetchMode(PDO::FETCH_ASSOC);
+
+        $resultado = $PDOStatement->fetchAll();
+        return $resultado ? $resultado[0]['rol_id'] : null;
     }
 
     /**
