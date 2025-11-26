@@ -95,20 +95,20 @@ class Vista{
      * Vista por defecto cuando no se encuentra la sección
      * @return self 404
      */
-    private function vistaNoEncontrada(): self{
+    public function vistaNoEncontrada(): self{
         $vista = new self();
-        $this->setUbicacion('error/404.php');
-        $this->setTitulo("404 - Página no encontrada");
-        $this->SetRestringido(false);
-        $this->SetActiva(true);
-        return $this;
+        $vista->setUbicacion('error/404.php');
+        $vista->setTitulo("404 - Página no encontrada");
+        $vista->SetRestringido(false);
+        $vista->SetActiva(true);
+        return $vista;
     }
 
     /**
      * Vista por defecto cuando no se encuentra la sección
      * @return self 404
      */
-    private function vistaNoDispobible(): self{
+    public function vistaNoDispobible(): self{
         $vista = new self();
         $vista->setUbicacion('error/403.php');
         $vista->setTitulo("403 - Página no disponible :(");
@@ -130,6 +130,22 @@ class Vista{
         return $vista;
     }
 
+    /**
+     * Obtener vista por nombre
+     * @param string $nombre
+     * @return Vista|null
+     */
+    public static function getVistaporNombre(string $nombre): ?self{
+        $conexion = Conexion::getConexion();
+        $query = "SELECT * FROM vistas WHERE nombre = :nombre LIMIT 1";
+        $PDOStatement = $conexion->prepare($query);
+        $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $PDOStatement->execute([ 'nombre' => $nombre]);
+
+        $vista = $PDOStatement->fetch();
+
+        return $vista ?: null;
+    }
 
     /**
      * Valida la sección solicitada y establece la vista y el título correspondientes.
@@ -138,7 +154,7 @@ class Vista{
      * @return self 
      */
     public function validarVista(string $nombre): self{
-        $conexion = (new Conexion())->getConexion();
+        $conexion = Conexion::getConexion();
         $query = "SELECT * FROM {$this->tabla} WHERE nombre = :nombre LIMIT 1";
         $PDOStatement = $conexion->prepare($query);
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);

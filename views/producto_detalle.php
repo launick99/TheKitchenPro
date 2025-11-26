@@ -15,6 +15,8 @@
     $imagen = $producto->getImagen();
     $imagenes = $producto->getImagenes() ?? "";
     $datos = $producto->getDatosTecnicos() ?? [];
+
+    $categorias = $producto->getCategorias() ?? [];
 ?>
 <main class="container my-5">
     <div class="row">
@@ -37,7 +39,13 @@
             <p class="text-muted">SKU: <?= $sku ?></p> 
             <p><?= $descripcion ?></p>
             <p class="fw-bold h2 text-success"><?= $precio ?></p>
-
+            <div class="my-5">
+                <?php foreach($categorias as $categoria){ ?>
+                    <a href="?section=categoria&categoria=<?= $categoria->getId() ?>" class="btn btn-primary">
+                        <?= $categoria->getNombre() ?>
+                    </a>
+                <?php } ?>
+            </div>
             <h3>Facilidades de pago:</h3>
             <ul>
                 <li>Pago a meses sin intereses (6, 12 y 18 meses).</li>

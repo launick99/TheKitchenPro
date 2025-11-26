@@ -24,25 +24,25 @@
         <h2 class="text-center">¡Pensados para vos!</h2>
         <ul class="categorias d-flex justify-content-between list-unstyled py-4">
             <li>
-                <a href="?section=catalogo&categorias%5B%5D=accesorios_para_cafe" class="text-dark text-center">
+                <a href="?section=categoria&categoria=5" class="text-dark text-center">
                     <i class="fa-solid fa-mug-hot"></i>
                     <p class="fw-bold m-0">Café</p>
                 </a>
             </li>
             <li>
-                <a href="?section=catalogo&categorias%5B%5D=organizacion" class="text-dark text-center">
+                <a href="?section=categoria&categoria=4" class="text-dark text-center">
                 <i class="fa-solid fa-kitchen-set"></i>
                     <p class="fw-bold m-0">Organización</p>
                 </a>
             </li>
             <li>
-                <a href="?section=catalogo&categorias%5B%5D=limpieza" class="text-dark text-center">
+                <a href="?section=categoria&categoria=3" class="text-dark text-center">
                     <i class="fa-solid fa-pump-soap"></i>
                     <p class="fw-bold m-0">Limpieza</p>
                 </a>
             </li>
             <li>
-                <a href="?section=catalogo&buscar=&categorias%5B%5D=seguridad_domestica&rango=" class="text-dark text-center">
+                <a href="?section=categoria&categoria=6" class="text-dark text-center">
                 <i class="fa-solid fa-hand-sparkles"></i>
                     <p class="fw-bold m-0">Seguridad</p>
                 </a>

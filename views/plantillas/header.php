@@ -1,5 +1,6 @@
 <?php
-    $paginas = ['inicio', 'catalogo', 'alumno', 'contacto'];
+    $paginas = ['inicio', 'catalogo', 'contacto'];
+    $paginasAdministracion = ['dashboard']
 ?>
 
 <header>
@@ -16,8 +17,33 @@
                     <?php foreach ($paginas as $pagina){ ?>
                         <li class="nav-item">
                             <a class="nav-link <?= Vista::isActive($pagina, $seccion) ? 'active' : '' ?>" href="?section=<?= $pagina ?>">
-                                <?php echo $pagina ?>
+                                <?php echo ucfirst($pagina) ?>
                             </a>
+                        </li>
+                    <?php } ?>
+                    <?php if(Permisos::usuarioPuedeVer($usuario, Vista::getVistaporNombre('alumno'))){ ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?= Vista::isActive('alumno', $seccion) ? 'active' : '' ?>" href="?section=alumno">
+                                Alumno
+                            </a>
+                        </li>
+                    <?php } ?>
+                    <?php if($usuario->tieneRol()){ ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="usuarioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Administración
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="usuarioDropdown">
+                                <?php foreach ($paginasAdministracion as $pagina){ ?>
+                                    <?php if(Permisos::usuarioPuedeVer($usuario, Vista::getVistaporNombre($pagina))) { ?> 
+                                        <li>
+                                            <a class="nav-link <?= Vista::isActive($pagina, $seccion) ? 'active' : '' ?>" href="?section=<?= $pagina ?>">
+                                                <?php echo ucfirst($pagina) ?>
+                                            </a>
+                                        </li>
+                                    <?php } ?>
+                                <?php } ?>
+                            </ul>
                         </li>
                     <?php } ?>
                     <?php if (isset($_SESSION['usuario'])): ?>

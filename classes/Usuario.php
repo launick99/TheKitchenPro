@@ -105,4 +105,11 @@ class Usuario
         }
         return null;
     }
+
+    /**
+     * retorna si el usuario tiene un rol asignado
+     */
+    public function tieneRol(): bool{
+        return $this->getRolId() !== null;
+    }
 }

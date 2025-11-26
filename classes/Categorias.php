@@ -67,16 +67,18 @@ class Categorias {
 
     /**
      * Obtiene una categoría por ID.
+     * @param int $id
+     * @return self|null
      */
-    public function getPorId(int $id): ?self {
+    public static function getCategoriaPorId(?int $id = null): ?self {
         $connection = Conexion::getConexion();
-        $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla} WHERE id = :id");
+        $PDOStatement = $connection->prepare("SELECT * FROM categorias WHERE id = :id LIMIT 1");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute(['id' => $id]);
 
         $result = $PDOStatement->fetch();
 
-        return $result ? $result[0] : null;
+        return $result;
     }
 
     /**

@@ -35,8 +35,7 @@ class Permisos
      */
     public static function rolPuedeVer(int $rolId, int $vistaId): bool
     {
-        $conexion = (new Conexion())->getConexion();
-
+        $conexion = Conexion::getConexion();
         $query = "
             SELECT permitido 
             FROM rol_vista

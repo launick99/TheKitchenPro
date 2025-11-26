@@ -91,6 +91,11 @@ class Producto {
         return $stock->getByProductoId($this->id);
     }
 
+    public function getCategorias(): ?array{
+        $productoCategoria = new ProductoCategoria();
+        return $productoCategoria->getCategoriasPorProductoId($this->id);
+    }
+
     /* ----------------------------------
     |  Métodos
     +---------------------------------- */
