@@ -36,12 +36,11 @@ if (count($errores) == 0) {
     $usuario = (new Usuario())->login($mail, $contrasenia);
 
     if ($usuario) {
-        $_SESSION['usuario_id'] = $usuario->id;
-        $_SESSION['usuario_nombre'] = $usuario->nombre ?? $usuario->nombre_usuario ?? $usuario->email;
+        $_SESSION['usuario'] = $usuario;
         
         setcookie(
             'usuario_cookie',
-            $usuario->nombre_usuario ?? $usuario->id,
+            $usuario->getNombreUsuario() ?? $usuario->getId(),
             time() + 3600,
             '/', 
             '',

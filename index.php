@@ -5,12 +5,18 @@
     $seccion = $_GET['section'] ?? 'inicio';
     $vista = (new Vista())->validarVista($seccion);
 
-    $ubicacion = $vista->getUbicacion();
-    $pageTitle = $vista->getTitulo();
-
     if (session_status() == PHP_SESSION_NONE) {
         isset($_SESSION) ? '' : session_start();
     }
+
+    $usuario = $_SESSION['usuario'] ?? null; 
+
+    if (!Permisos::usuarioPuedeVer($usuario, $vista)) {
+        $vista = $vista->vistaNoAutorizada(); 
+    }
+
+    $ubicacion = $vista->getUbicacion();
+    $pageTitle = $vista->getTitulo();
 ?>
 
 <!DOCTYPE html>

@@ -95,10 +95,6 @@ class Producto {
     |  Métodos
     +---------------------------------- */
 
-    public function getCategoria(){
-        return "";
-    }
-
     /**
      * Obtiene todos los productos desde la base de datos.
      * @return array Lista de productos.

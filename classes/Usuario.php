@@ -7,10 +7,56 @@ class Usuario
 {
     protected $tabla = 'usuarios';
 
-    public $id;
-    public $nombre_usuario; // Nombre de usuario
-    public $email;
-    public $password; // Hasheada
+    protected $id;
+    protected $nombre_usuario; // Nombre de usuario
+    protected $email;
+    protected $password; // Hasheada
+    protected $rol_id;
+
+    /* ----------------------------------
+    |  Getters
+    +---------------------------------- */
+    public function getId(): int{
+        return $this->id;
+    }
+
+    public function getNombreUsuario(): string{
+        return $this->nombre_usuario;
+    }
+
+    public function getEmail(): string{
+        return $this->email;
+    }
+
+    public function getPassword(): string{
+        return $this->password;
+    }
+
+    public function getRolId(): int{
+        return $this->rol_id;
+    }
+    /* ----------------------------------
+    |  Setters
+    +---------------------------------- */
+    public function setId($id){
+        $this->id = $id;
+    }
+
+    public function setNombreUsuario($nombre_usuario){
+        $this->nombre_usuario = $nombre_usuario;
+    }
+
+    public function setEmail($email){
+        $this->email = $email;
+    }
+
+    public function setPassword($password){
+        $this->password = $password;
+    }
+
+    public function setRolId($rol_id){
+        $this->rol_id = $rol_id;
+    }
 
     /**
      * Buscar usuario por nombre de usuario

@@ -20,10 +20,10 @@
                             </a>
                         </li>
                     <?php } ?>
-                    <?php if (isset($_SESSION['usuario_id'])): ?>
+                    <?php if (isset($_SESSION['usuario'])): ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="usuarioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <?= htmlspecialchars($_SESSION['usuario_nombre']) ?>
+                                <?= htmlspecialchars($_SESSION['usuario']->getNombreUsuario()) ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="usuarioDropdown">
                                 <li>

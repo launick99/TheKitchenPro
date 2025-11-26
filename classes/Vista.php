@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Clase que se ocupa de manejar las vistas
+ * @method void VistaExiste - verifica que la vista exista
+ * @method Vista vistaNoAutorizada - devuelve la pantalla 403
+ * @method Vista validarVista - valida que la vista este activa y exista
+ * @method bool isActive - valida si el nombre de la vista dado es igual al de la vista 
+ */
 class Vista{
 
     protected $tabla = 'vistas';
@@ -103,30 +110,32 @@ class Vista{
      */
     private function vistaNoDispobible(): self{
         $vista = new self();
-        $this->setUbicacion('error/403.php');
-        $this->setTitulo("403 - Página no disponible :(");
-        $this->SetRestringido(false);
-        $this->SetActiva(true);
-        return $this;
+        $vista->setUbicacion('error/403.php');
+        $vista->setTitulo("403 - Página no disponible :(");
+        $vista->SetRestringido(false);
+        $vista->SetActiva(true);
+        return $vista;
     }
 
     /**
      * Vista no autorizada
      * @return self 403
      */
-    private function vistaNoAutorizada(): self{
+    public function vistaNoAutorizada(): self{
         $vista = new self();
-        $this->setUbicacion('error/403.php');
-        $this->setTitulo("403 - Página no accesible");
-        $this->SetRestringido(true);
-        $this->SetActiva(true);
-        return $this;
+        $vista->setUbicacion('error/403.php');
+        $vista->setTitulo("403 - Página no accesible");
+        $vista->SetRestringido(true);
+        $vista->SetActiva(true);
+        return $vista;
     }
 
 
     /**
      * Valida la sección solicitada y establece la vista y el título correspondientes.
      * Si la sección no es válida, establece una vista de error 404.
+     * @param string $nombre nombre de la vista
+     * @return self 
      */
     public function validarVista(string $nombre): self{
         $conexion = (new Conexion())->getConexion();
@@ -141,11 +150,7 @@ class Vista{
             if(!$vista->getActiva()){
                 return $this->vistaNoDispobible();
             }
-            if(!$vista->getRestringido()){
-                return $vista;
-            }else{
-                return $this->vistaNoAutorizada();
-            }
+            return $vista;
         }
 
         return $this->vistaNoEncontrada();
