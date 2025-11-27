@@ -17,6 +17,8 @@
     $datos = $producto->getDatosTecnicos() ?? [];
 
     $categorias = $producto->getCategorias() ?? [];
+
+    $colores = ['primary', 'secondary', 'success', 'danger', 'warning'];
 ?>
 <main class="container my-5">
     <div class="row">
@@ -38,19 +40,29 @@
             <!-- estaba como sku en el trabajo del semetre pasado -->
             <p class="text-muted">SKU: <?= $sku ?></p> 
             <p><?= $descripcion ?></p>
-            <p class="fw-bold h2 text-success"><?= $precio ?></p>
+            <p class="fw-bold h2 text-success my-5"><?= $precio ?></p>
             <div class="my-5">
-                <?php foreach($categorias as $categoria){ ?>
-                    <a href="?section=categoria&categoria=<?= $categoria->getId() ?>" class="btn btn-kitchenpro btn btn-primary">
+                <?php foreach($categorias as $c => $categoria){ ?>
+                    <?php if($c >= 5){ break; } ?>
+                    <a href="?section=categoria&categoria=<?= $categoria->getId() ?>" class="btn btn-<?= $colores[$c] ?> btn-sm">
                         <?= $categoria->getNombre() ?>
                     </a>
                 <?php } ?>
             </div>
             <h3>Facilidades de pago:</h3>
-            <ul>
-                <li>Pago a meses sin intereses (6, 12 y 18 meses).</li>
-                <li>Transferencia bancaria.</li>
-                <li>Pago con tarjeta de crédito y débito.</li>
+            <ul class="list-unstyled">
+                <li class="my-1">
+                    <i class="fa-solid fa-piggy-bank fa-lg text-warning me-2"></i>
+                    <span>Pago a meses sin intereses (6, 12 y 18 meses).</span>
+                </li>
+                <li class="my-1">
+                    <i class="fa-solid fa-building-columns fa-lg text-warning me-2"></i>
+                    <span>Transferencia bancaria.</span>    
+                </li>
+                <li class="my-1">
+                    <i class="fa-regular fa-credit-card fa-lg text-warning me-2"></i>
+                    <span>Pago con tarjeta de crédito y débito.</span>    
+                </li>
             </ul>
             <!-- No hace nada -->
             <button class="btn btn-kitchenpro btn btn-warning w-100">

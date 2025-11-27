@@ -31,7 +31,7 @@
             <div id="imagenes-preview" class="d-flex flex-wrap gap-2"></div>
         </fieldset>
 
-        <button type="submit" class="btn btn btn-kitchenpro btn-warning">Guardar Información Adicional</button>
+        <button type="submit" class="btn btn-kitchenpro btn-warning">Guardar Información Adicional</button>
     </form>
 </section>
 
