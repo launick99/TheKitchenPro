@@ -15,19 +15,19 @@ class Categorias {
     /* ----------------------------------
     |  Getters
     +---------------------------------- */
-    public function getId(): int {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getNombre(): string {
+    public function getNombre(): ?string {
         return $this->nombre;
     }
 
-    public function getDescripcion(): string {
+    public function getDescripcion(): ?string {
         return $this->descripcion;
     }
 
-    public function getActiva(): bool {
+    public function getActiva(): ?bool {
         return $this->activa;
     }
 
@@ -87,33 +87,54 @@ class Categorias {
 
         $result = $PDOStatement->fetch();
 
-        return $result;
+        return $result ?: null;
     }
 
     /**
-     * Inserta una nueva categoría.
+     * Inserta una nueva categoria
+     * @param string $nombre
+     * @param string $descripcion
+     * @param bool $activa
+     *
+     * @return int Devuelve el ID generado
      */
-    public function crear(): bool {
-        $connection = Conexion::getConexion();
-        $PDOStatement = $connection->prepare("INSERT INTO {$this->tabla} (nombre, activa) VALUES (:nombre, :activa)");
+    public static function insert(string $nombre, string $descripcion, bool $activa = true): int{
+        $conexion = Conexion::getConexion();
 
-        return $PDOStatement->execute([
-            'nombre' => $this->nombre,
-            'activa' => $this->activa ?? 1
+        $sql = "INSERT INTO categorias 
+                (nombre, descripcion, activa)
+                VALUES (:nombre, :descripcion, :activa)";
+
+        $PDOStatement = $conexion->prepare($sql);
+        $PDOStatement->execute([
+            'nombre'      => $nombre,
+            'descripcion' => $descripcion,
+            'activa'      => $activa ? 1 : 0
         ]);
+        return (int) $conexion->lastInsertId();
     }
 
     /**
-     * Actualiza la categoría existente.
+     * Actualiza una categoría existente.
+     *
+     * @return bool True si se actualizp
      */
-    public function actualizar(): bool {
-        $connection = Conexion::getConexion();
-        $PDOStatement = $connection->prepare("UPDATE {$this->tabla} SET nombre = :nombre, activa = :activa WHERE id = :id");
+    public function update(): bool {
+        $conexion = Conexion::getConexion();
+
+        $sql = "UPDATE categorias 
+                SET nombre = :nombre,
+                    descripcion = :descripcion,
+                    activa = :activa
+                WHERE id = :id";
+
+        $PDOStatement = $conexion->prepare($sql);
 
         return $PDOStatement->execute([
-            'nombre' => $this->nombre,
-            'activa' => $this->activa,
-            'id' => $this->id
+            'id'          => $this->id,
+            'nombre'      => $this->nombre,
+            'descripcion' => $this->descripcion,
+            'activa'      => $this->activa ? 1 : 0
         ]);
     }
 

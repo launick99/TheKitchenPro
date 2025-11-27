@@ -232,6 +232,25 @@ class Producto {
         return $this->descripcion;
     }
 
+    /** */
+    public function insert(string $nombre, string $descripcion, float $precio, string $fechaIngreso, bool $activo = true, ?string $imagen = null): ?int{
+        $conexion = Conexion::getConexion();
+        $sql = "INSERT INTO producto VALUES (NULL, :nombre, :descripcion, :precio, :fechaIngreso, :activo, :imagen)";
+
+        $PDOStatement = $conexion->prepare($sql);
+
+        $PDOStatement->execute([
+            'nombre'        => $nombre,
+            'descripcion'   => $descripcion,
+            'precio'        => $precio,
+            'fechaIngreso'  => $fechaIngreso,
+            'activo'        => $activo ? 1 : 0,
+            'imagen'        => $imagen
+        ]);
+
+        return (int) $conexion->lastInsertId();
+    }
+
     /**
      * Desactiva un producto 
      * @return bool si se elimino
