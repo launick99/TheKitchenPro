@@ -24,7 +24,7 @@ class ProductoImagenes {
     }
 
     public function getUrl(): string{
-        return $this->url;
+        return Imagen::buscarImagen($this->url, "assets/img/productos/".$this->getProductoId()."/");
     }
 
     public function getActivo(): bool{
@@ -55,9 +55,9 @@ class ProductoImagenes {
      * @param int $productoId
      * @return self|null Lista de imágenes o null
      */
-    public function getByProductoId(int $productoId): ?array {
+    public static function getByProductoId(int $productoId): ?array {
         $connection = Conexion::getConexion();
-        $query = "SELECT * FROM {$this->tabla} WHERE producto_id = :id";
+        $query = "SELECT * FROM producto_imagenes WHERE producto_id = :id";
 
         $PDOStatement = $connection->prepare($query);
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
@@ -79,36 +79,33 @@ class ProductoImagenes {
     }
 
     /**
-     * Inserta un nuevo registro de imagen.
+     * Elimina todas las imagenes de un producto
+     * @param int $producto_id
+     * @return bool
      */
-    public function crear(): bool {
-        $connection = Conexion::getConexion();
-        $query = "INSERT INTO {$this->tabla} (producto_id, url, activo)
-                  VALUES (:producto_id, :url, :activo)";
-        $PDOStatement = $connection->prepare($query);
-
-        return $PDOStatement->execute([
-            'producto_id' => $this->producto_id,
-            'url' => $this->url,
-            'activo' => $this->activo ?? 1,
-        ]);
+    public static function deleteTodosProducto(int $producto_id): bool{
+        $conexion = Conexion::getConexion();
+        $PDOStatement = $conexion->prepare("DELETE FROM producto_imagenes WHERE producto_id = :producto_id");
+        $resultado = $PDOStatement->execute(['producto_id' => $producto_id]);
+        return (bool) $resultado;
     }
 
     /**
-     * Actualiza la imagen existente.
+     * Agrega una imagen
+     * @param int $producto_id
+     * @param string $url la ubicacion del archivo
+     * @param bool activo
+     * @return bool si se inserto
      */
-    public function actualizar(): bool {
+    public static function insert(int $producto_id, string $url, ?bool $activo = true): bool {
         $connection = Conexion::getConexion();
-        $query = "UPDATE {$this->tabla}
-                  SET url = :url, activo = :activo
-                  WHERE id = :id";
-
+        $query = "INSERT INTO producto_imagenes VALUES (NULL, :producto_id, :url, :activo)";
         $PDOStatement = $connection->prepare($query);
 
         return $PDOStatement->execute([
-            'url' => $this->url,
-            'activo' => $this->activo,
-            'id' => $this->id,
+            'producto_id' => $producto_id,
+            'url' => $url,
+            'activo' => $activo,
         ]);
     }
 }

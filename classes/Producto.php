@@ -77,8 +77,7 @@ class Producto {
      * @return array Lista de URLs de imágenes.
      */
     public function getImagenes(): ?array {
-        $productoImagenes = new ProductoImagenes();
-        return $productoImagenes->getByProductoId($this->id);
+        return ProductoImagenes::getByProductoId($this->id);
     }
 
     public function getDatosTecnicos(): ?array{

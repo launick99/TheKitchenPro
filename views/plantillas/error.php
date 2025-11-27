@@ -10,3 +10,14 @@
         </div>
     <?php } ?>
 </div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        error = document.getElementById('error');
+        setTimeout(() => {
+            error ? error.classList.add('invisible') : '';
+        }, 4000);
+        setTimeout(() => {
+            error ? error.classList.add('d-none') : '';
+        }, 4200);
+    })
+</script>

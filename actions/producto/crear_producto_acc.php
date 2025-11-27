@@ -40,7 +40,7 @@
     if($imagen) {
         $permitidos = ['image/webp'];
         if(!in_array($imagen['type'], $permitidos)) {
-            $errores[] = "El archivo de imagen debe ser JPG, PNG o WEBP.";
+            $errores[] = "El archivo de imagen debe ser WEBP.";
         }
         if($imagen['size'] > 5*1024*1024) {
             $errores[] = "El archivo de imagen no puede superar los 5MB.";

@@ -54,10 +54,49 @@ class DatosTecnicos {
      * Obtiene todos los datos técnicos de un producto.
      */
     public function getByProductoId(int $productoId): array {
-        $connection = Conexion::getConexion();
-        $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla} WHERE producto_id = :id");
+        $conexion = Conexion::getConexion();
+        $PDOStatement = $conexion->prepare("SELECT * FROM {$this->tabla} WHERE producto_id = :id");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute(['id' => $productoId]);
         return $PDOStatement->fetchAll();
+    }
+
+    /**
+     * Elimina un dato tecnico
+     * @param int $id
+     * @return bool 
+     */
+    public static function delete(int $id): bool{
+        $conexion = Conexion::getConexion();
+        $PDOStatement = $conexion->prepare("DELETE FROM producto_dato_tecnico WHERE id = :id");
+        $resultado = $PDOStatement->execute(['id' => $id]);
+        return (bool) $resultado;
+    }
+
+    /**
+     * Elimina todos los datos tecnicos de un producto
+     * @param int $producto_id
+     * @return bool
+     */
+    public static function deleteTodosProducto(int $producto_id): bool{
+        $conexion = Conexion::getConexion();
+        $PDOStatement = $conexion->prepare("DELETE FROM producto_dato_tecnico WHERE producto_id = :producto_id");
+        $resultado = $PDOStatement->execute(['producto_id' => $producto_id]);
+        return (bool) $resultado;
+    }
+
+
+    /**
+     * Añade un dato tecnico
+     * @param int $id_producto
+     * @param string clave nombre del dato
+     * @param string valor del dato
+     * @return int id del resultado
+     */
+    public static function insert(int $id_producto, string $clave, string $valor): int{
+        $conexion = Conexion::getConexion();
+        $PDOStatement = $conexion->prepare("INSERT INTO producto_dato_tecnico VALUES (NULL, :id_producto, :clave, :valor)");
+        $PDOStatement->execute(['id_producto' => $id_producto, 'clave' => $clave, 'valor' => $valor]);
+        return (int) $conexion->lastInsertId();
     }
 }

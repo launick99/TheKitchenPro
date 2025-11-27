@@ -42,6 +42,17 @@ class Imagen{
         }
         return $nombre;
     }
+
+    public static function borrarImagen(string $ubicacion){
+        if(file_exists($ubicacion)){
+            $eliminado = unlink($ubicacion);
+            if(!$eliminado){
+                throw new Exception("No se pudo eliminar la imagen");
+            }
+            return true;
+        }
+        return false;
+    }
 }
 
 ?>
