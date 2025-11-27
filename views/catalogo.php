@@ -27,7 +27,7 @@
     <h2 class="mb-4">Catálogo de Productos</h2>
     <div class="row">
         <div class="col-12 col-lg-4 col-xl-3">
-        <form method="GET" class="d-flex flex-column mb-4">
+            <form method="GET" class="d-flex flex-column mb-4">
                 <input type="hidden" name="section" value="catalogo">
                 <div class="form-group mb-3">
                     <label for="buscar">Buscar producto</label>
@@ -82,7 +82,7 @@
                     </div>
                 <?php else: ?>
                     <?php foreach ($productos as $producto): ?>
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="col-12 col-md-4 col-xl-4 mb-4">
                             <div class="card h-100 shadow-sm">
                                 <img src="<?= $producto->getImagen() ?>" class="card-img-top" alt="<?= $producto->getNombre() ?>" Style="max-height:250px;">
                                 <div class="card-body">

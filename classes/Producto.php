@@ -179,11 +179,12 @@ class Producto {
             $query[] = "s.stock > 0";
         }
 
+        $sql .= ' WHERE activo = 1';
         if (count($query) > 0) {
-            $sql .= " WHERE " . implode(" AND ", $query);
+            $sql .= " AND " . implode(" AND ", $query);
         }
 
-        $sql .= " WHERE activo = 1 GROUP BY p.id";
+        $sql .= " GROUP BY p.id";
 
         $PDOStatement = $connection->prepare($sql);
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);

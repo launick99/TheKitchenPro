@@ -71,7 +71,7 @@
                     </div>
                 <?php else: ?>
                     <?php foreach ($productos as $producto): ?>
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="col-12 col-md-6 col-xl-4 mb-4">
                             <div class="card h-100 shadow-sm">
                                 <img src="<?= $producto->getImagen() ?>" class="card-img-top" alt="<?= $producto->getNombre() ?>" Style="max-height:250px;">
                                 <div class="card-body">

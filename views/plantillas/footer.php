@@ -33,18 +33,12 @@
                 <div class="col-md-6 col-lg-4 mx-auto mb-md-0 mb-4">
                     <h2 class="text-uppercase fw-bold h6">Productos</h2>
                     <hr>
-                    <p>
-                        <a href="?section=catalogo&categorias%5B%5D=accesorios_para_cafe" class="text-dark">Accesorios Para Café</a>
-                    </p>
-                    <p>
-                        <a href="?section=catalogo&categorias%5B%5D=electrodomesticos" class="text-dark">Electrodomésticos</a>
-                    </p>
-                    <p>
-                        <a href="?section=catalogo&categorias%5B%5D=limpieza" class="text-dark">Limpieza</a>
-                    </p>
-                    <p>
-                        <a href="?section=catalogo&categorias%5B%5D=organizacion" class="text-dark">Organización</a>
-                    </p>
+                    <?php foreach(Categorias::getTodas() as $c => $categoria){ ?>
+                    <?php if($c >= 5){ break; } ?>
+                        <p>
+                            <a href="?section=categoria&categoria=<?= $categoria->getId() ?>" class="text-dark"><?= $categoria->getNombre() ?></a>
+                        </p>
+                    <?php } ?>
                 </div>
                 <div class="col-md-6 col-lg-4 mx-auto mb-md-0 mb-4">
                     <h2 class="h6 text-uppercase fw-bold">Contacto</h2>
