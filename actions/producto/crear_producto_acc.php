@@ -97,7 +97,7 @@
     }
 
     // Redirigir al dashboard de productos
-    header("Location: ../../?section=add_producto_info");
+    header("Location: ../../?section=add_producto_info&id=$producto");
     exit;
 
 ?>

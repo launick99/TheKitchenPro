@@ -23,7 +23,7 @@
                 <?php if($producto->getActivo()){ ?>
                     <tr>
                         <td>
-                            <img id="mainImage" class="img-thumbnail" src="<?= $imagen ?>" alt="Imagen principal del producto">
+                            <img id="mainImage" class="img-thumbnail" style="max-width: 128px;" src="<?= $producto->getImagen() ?>" alt="Imagen principal del producto">
                         </td>
                         <th><?= $producto->getNombre() ?></th>
                         <td><?= $producto->getDescripcionCorta() ?></td>
@@ -58,7 +58,7 @@
                 <?php if(!$producto->getActivo()){ ?>
                     <tr>
                         <td>
-                            <img id="mainImage" class="img-thumbnail" src="<?= $imagen ?>" alt="Imagen principal del producto">
+                            <img id="mainImage" class="img-thumbnail" style="max-width: 128px;"  src="<?= $producto->getImagen() ?>" alt="Imagen principal del producto">
                         </td>
                         <th><?= $producto->getNombre() ?></th>
                         <td><?= $producto->getDescripcionCorta() ?></td>

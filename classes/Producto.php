@@ -36,7 +36,7 @@ class Producto {
      * Devuelve la url de la imagen del prodycto o una por defecto si no existe
      */
     public function getImagen(): string{ 
-        return $this->imagen ?? Imagen::imageNotFound(); 
+        return Imagen::buscarImagen($this->imagen, 'assets/img/productos/'); 
     }
     public function getActivo(): bool{
         return $this->activo;

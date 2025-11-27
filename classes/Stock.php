@@ -57,12 +57,12 @@ class Stock {
      */
     public static function getByProductoId(int $id): ?self {
         $connection = Conexion::getConexion();
-        $query = "SELECT * FROM producto_stock WHERE producto_id = :id";
+        $query = "SELECT * FROM producto_stock WHERE producto_id = :id LIMIT 1";
         $PDOStatement = $connection->prepare($query);
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute(['id' => $id]);
-
-        return $PDOStatement->fetch() ?? null;
+        $result = $PDOStatement->fetch();
+        return $result ?: null;
     }
 
     /**

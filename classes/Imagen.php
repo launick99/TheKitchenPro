@@ -3,6 +3,20 @@
 class Imagen{
 
     /**
+     * Busca la imagen localmente, sino, revisa que sea una url externa
+     */
+    public static function buscarImagen(?string $imagen, ?string $ubicacion = null): string{
+        if($imagen){
+            if(file_exists($ubicacion.$imagen)){
+                return $ubicacion.$imagen;
+            }
+            return $imagen;
+        }
+        return self::imageNotFound();
+    }
+
+
+    /**
      * Retorna una imagen por defecto
      * @return string imagen
      */
