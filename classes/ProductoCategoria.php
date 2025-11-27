@@ -4,6 +4,41 @@ class ProductoCategoria
 {
     protected $tabla =  "producto_categoria";
 
+    protected $id;
+    protected $producto_id;
+    protected $categoria_id;
+
+    /* ----------------------------------
+    |  Getters
+    +---------------------------------- */
+    public function getId(){
+        return $this->id;
+    }
+
+    public function getProductoId(){
+        return $this->producto_id;
+    }
+
+    public function getCategoriaId(){
+        return $this->categoria_id;
+    }
+
+    /* ----------------------------------
+    |  Setters
+    +---------------------------------- */
+    public function id(int $id){
+        $this->id = $id;
+    }
+
+    public function setProductoId(int $producto_id){
+        $this->producto_id = $producto_id;
+    }
+
+    public function setCategoriaId(int $categoria_id){
+        $this->categoria_id = $categoria_id;
+    }
+
+
     public static function getCategoriasPorProductoId(int $productoId): ?array
     {
         $conexion = Conexion::getConexion();
@@ -22,5 +57,16 @@ class ProductoCategoria
 
         $resultado = $PDOStatement->fetchAll() ?: null;
         return $resultado;
+    }
+
+    public static function insert(int $producto_id, int $categoria_id): int{
+        $conexion = Conexion::getConexion();
+        $query = 'INSERT INTO producto_categoria VALUES (NULL, :producto_id, :categoria_id)';
+        $PDOStatement = $conexion->prepare($query);
+        $PDOStatement->execute([
+            'producto_id' => $producto_id,
+            'categoria_id' => $categoria_id
+        ]);
+        return (int) $conexion->lastInsertId();
     }
 }

@@ -3,6 +3,7 @@
 ?>
 <section class="my-5 container">
     <h2>Administración de Productos</h2>
+    <a class="btn btn-primary mb-4" href="?section=add_producto">Crear Producto</a>
     <table class="table table-responsive table-striped table-light">
         <thead class="table-warning">
             <tr>

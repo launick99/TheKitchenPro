@@ -3,17 +3,17 @@
 ?>
 <section class="my-5 container">
     <h2>Administración de Categorias</h2>
-    <a class="btn btn-primary mb-4" href="?section=editar_categoria">Crear Categoria</a>
+    <a class="btn btn-primary mb-4" href="?section=add_categoria">Crear Categoria</a>
 
     <table class="table table-responsive table-striped table-light">
         <thead class="table-warning">
             <tr>
-                <th colspan=6>Categorias Activas</th>
+                <th colspan=3>Categorias Activas</th>
             </tr>
             <tr>
-                <th>Categoria</th>
+                <th class="w-25">Categoria</th>
                 <th>Descripcion</th>
-                <th>Acciones</th>
+                <th style="width: 128px;">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -35,12 +35,12 @@
     <table class="table table-responsive table-striped table-danger">
         <thead class="table-warning">
             <tr>
-                <th colspan=6>Categorias Inactivos</th>
+                <th colspan=3>Categorias Inactivos</th>
             </tr>
             <tr>
-                <th>Categoria</th>
+                <th class="w-25">Categoria</th>
                 <th>Descripcion</th>
-                <th>Acciones</th>
+                <th style="width: 128px;">Acciones</th>
             </tr>
         </thead>
         <tbody>

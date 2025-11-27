@@ -38,7 +38,7 @@ try {
     $categoria->setActiva($activa);
 
     $categoria->update();
-    header("Location: ../../?section=editar_categoria&id=$id");
+    header("Location: ../../?section=dashboard_categorias");
 
 
 } catch (\Throwable $error) {

@@ -6,7 +6,6 @@
 class Stock {
     protected $tabla = 'producto_stock';
 
-    protected $id;
     protected $producto_id;
     protected $stock;
     protected $stock_minimo;
@@ -15,9 +14,6 @@ class Stock {
     /* ----------------------------------
     |  Getters
     +---------------------------------- */
-    public function getId(): int{
-        return $this->id;
-    }
 
     public function getProductoId():int{
         return $this->producto_id;
@@ -38,9 +34,6 @@ class Stock {
     /* ----------------------------------
     |  Setters
     +---------------------------------- */
-    public function setProductoId(int $id){
-        $this->producto_id = $id;
-    }
 
     public function setStock(int $stock){
         if ($stock < 0) {
@@ -86,5 +79,22 @@ class Stock {
      */
     public function stockBajo(): bool {
         return $this->stock <= $this->stock_minimo;
+    }
+
+    /**
+     * 
+     */
+    public static function insert(int $producto_id, int $stock, int $stock_minimo): int{
+        $conexion = Conexion::getConexion();
+        $fecha = Date('Y-m-d');
+        $query = 'INSERT INTO producto_stock VALUES (:producto_id, :stock, :stock_minimo, :fecha)';
+        $PDOStatement = $conexion->prepare($query);
+        $PDOStatement->execute([
+            'producto_id' => $producto_id,
+            'stock' => $stock,
+            'stock_minimo' => $stock_minimo,
+            'fecha' => $fecha
+        ]);
+        return (int) $conexion->lastInsertId();
     }
 }

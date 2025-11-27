@@ -36,7 +36,7 @@ class Producto {
      * Devuelve la url de la imagen del prodycto o una por defecto si no existe
      */
     public function getImagen(): string{ 
-        return $this->imagen ?? 'https://nftcalendar.io/storage/uploads/2022/02/21/image-not-found_0221202211372462137974b6c1a.png'; 
+        return $this->imagen ?? Imagen::imageNotFound(); 
     }
     public function getActivo(): bool{
         return $this->activo;
@@ -234,9 +234,9 @@ class Producto {
     }
 
     /** */
-    public function insert(string $nombre, string $descripcion, float $precio, string $fechaIngreso, bool $activo = true, ?string $imagen = null): ?int{
+    public static function insert(string $nombre, string $descripcion, float $precio, string $fechaIngreso, bool $activo = true, ?string $imagen = null): ?int{
         $conexion = Conexion::getConexion();
-        $sql = "INSERT INTO producto VALUES (NULL, :nombre, :descripcion, :precio, :fechaIngreso, :activo, :imagen)";
+        $sql = "INSERT INTO producto VALUES (NULL, :nombre, :descripcion, :precio, :imagen, :fechaIngreso, :activo)";
 
         $PDOStatement = $conexion->prepare($sql);
 

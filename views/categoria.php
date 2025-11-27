@@ -29,7 +29,8 @@
 ?>
 
 <section class="container my-5" id="productos">
-    <h2 class="mb-4"><?= $categoria->getNombre() ?></h2>
+    <h2><?= $categoria->getNombre() ?></h2>
+    <p class="mb-4"><?= $categoria->getDescripcion() ?></p>
     <div class="row">
         <div class="col-12 col-lg-4 col-xl-3">
         <form method="GET" class="d-flex flex-column mb-4">

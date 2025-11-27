@@ -1,23 +1,15 @@
 <?php
-    $id = $_GET['id'];
-    $categoria = $id ? Categorias::getCategoriaPorId((int)$id) : new Categorias();
-    $existe = $categoria->getId();
-
+    $categoria= new Categorias();
     if($error){
         $categoria->setNombre($_GET['nombre']);
         $categoria->setDescripcion($_GET['descripcion']);
         $categoria->setActiva($_GET['activa']);
     }
-
-    $accion = $existe ? "actions/categoria/actualizar_categoria_acc.php?id=$id" : 'actions/categoria/crear_categoria_acc.php';
-    $titulo = $existe ? 'Editar ' . $categoria->getNombre() : 'Crear Categoria';
-
-    $btn = $existe ? 'Guardar' :  'Crear Categoria';
 ?>
 
 <section class="container my-5">
-    <h2><?= $titulo ?></h2>
-    <form action="<?= $accion ?>" method="post">
+    <h2>Crear Categoria</h2>
+    <form action="actions/categoria/crear_categoria_acc.php" method="post">
         <div class="my-1">
             <label class="form-label" for="nombre">Nombre</label>
             <input class="form-control" type="text" id="nombre" name="nombre" value="<?= $categoria->getNombre() ?>" required>
@@ -33,6 +25,6 @@
                 <span>Activa</span>
             </label>
         </div>
-        <button class="btn btn-warning" type="submit"><?= $btn ?></button>
+        <button class="btn btn-warning" type="submit">Crear Categoria</button>
     </form>
 </section>

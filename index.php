@@ -30,20 +30,13 @@
         <link href="./assets/css/bootstrap.css" rel="stylesheet">
         <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="./app.css">
-        <!-- TODO: pensar otro nombre -->
         <title><?= "$pageTitle | " ?>The Kitchen Pro</title>
         <!-- fontawesome -->
         <script src="https://kit.fontawesome.com/80c9de9a04.js" crossorigin="anonymous"></script>
     </head>
     <body class="d-flex flex-column" style="min-height: 100vh;">
         <?php include_once('views/plantillas/header.php'); ?>
-        <div class="position-absolute" style="top: 2rem; right: 2rem;">
-            <?php if(isset($error)){ ?>
-                <div class="alert alert-danger visible" id="error" style="transition: opacity 0.5s ease, visibility 0.5s ease;">
-                    <p><strong>Error: </strong><?= $error ?></p>
-                </div>
-            <?php } ?>
-        </div>
+        <?php include_once('views/plantillas/error.php'); ?>
         <main class="flex-grow-1">
             <?php 
                 try {
