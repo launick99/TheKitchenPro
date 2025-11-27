@@ -28,6 +28,6 @@
                 <span>Activa</span>
             </label>
         </div>
-        <button class="btn btn-warning" type="submit">Guardar</button>
+        <button class="btn btn-kitchenpro btn btn-warning" type="submit">Guardar</button>
     </form>
 </section>

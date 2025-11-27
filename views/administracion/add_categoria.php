@@ -25,6 +25,6 @@
                 <span>Activa</span>
             </label>
         </div>
-        <button class="btn btn-warning" type="submit">Crear Categoria</button>
+        <button class="btn btn-kitchenpro btn btn-warning" type="submit">Crear Categoria</button>
     </form>
 </section>

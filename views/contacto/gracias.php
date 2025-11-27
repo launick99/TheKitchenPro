@@ -42,7 +42,7 @@
                     <li><?= $e ?></li>
                 <?php endforeach; ?>
             </ul>
-            <a href="index.php?section=contacto" class="btn btn-warning">Volver</a>
+            <a href="index.php?section=contacto" class="btn btn-kitchenpro btn btn-warning">Volver</a>
         </div>
     </div>
 <?php else: ?>
@@ -60,7 +60,7 @@
                     <li class="list-group-item"><strong>Teléfono:</strong> <?= $cel ?: 'No proporcionado' ?></li>
                     <li class="list-group-item"><strong>Comentario:</strong><br><?= $comentario ?: 'Sin comentario :o' ?></li>
                 </ul>
-                <a href="index.php" class="btn btn-warning">Volver al inicio</a>
+                <a href="index.php" class="btn btn-kitchenpro btn btn-warning">Volver al inicio</a>
             </div>
         </div>
     </div>

@@ -34,7 +34,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-sm-4">
-                <button type="submit" class="btn btn-warning w-100 mb-4">
+                <button type="submit" class="btn btn-kitchenpro btn btn-warning w-100 mb-4">
                     <span>Enviar!</span>
                 </button>
             </div>

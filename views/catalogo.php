@@ -69,7 +69,7 @@
                     <label class="form-check-label" for="stock">Solo productos en stock</label>
                 </div>
                 <!-- Filtrar -->
-                <button type="submit" class="btn btn-warning mt-2">Filtrar</button>
+                <button type="submit" class="btn btn-kitchenpro btn btn-warning mt-2">Filtrar</button>
             </form>
         </div>
         <div class="col-12 col-lg-8 col-xl-9">
@@ -100,7 +100,7 @@
                                         </p>
                                         <p class="card-text text-end fw-bold h4"><?= $producto->formatearPrecio() ?></p>
                                     </div>
-                                    <a href="index.php?section=detalle&id=<?= $producto->getId() ?>" class="btn btn-warning w-100">Ver más</a>
+                                    <a href="index.php?section=detalle&id=<?= $producto->getId() ?>" class="btn btn-kitchenpro btn btn-warning w-100">Ver más</a>
                                 </div>
                             </div>
                         </div>

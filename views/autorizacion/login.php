@@ -36,7 +36,7 @@
                     </div>
                     <!-- login -->
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <button type="submit" class="btn btn-warning w-100">
+                        <button type="submit" class="btn btn-kitchenpro btn btn-warning w-100">
                             Login
                         </button>
                     </div>

@@ -107,7 +107,7 @@
         </fieldset>
 
         <div class="my-5">
-            <button type="submit" class="btn btn-success">Agregar Producto</button>
+            <button type="submit" class="btn btn-kitchenpro btn btn-success">Agregar Producto</button>
         </div>
     </form>
 </section>

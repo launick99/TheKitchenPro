@@ -3,7 +3,7 @@
 ?>
 <section class="my-5 container">
     <h2>Administración de Productos</h2>
-    <a class="btn btn-primary mb-4" href="?section=add_producto">Crear Producto</a>
+    <a class="btn btn-kitchenpro btn btn-primary mb-4" href="?section=add_producto">Crear Producto</a>
     <table class="table table-responsive table-striped table-light">
         <thead class="table-warning">
             <tr>
@@ -30,8 +30,8 @@
                         <td><?= $producto->formatearPrecio() ?></td>
                         <td><?= $producto->getStock()?->getStock() ?></td>
                         <td>
-                            <a class="btn btn-primary w-100 my-1" href="?section=editar_producto&id=<?= $producto->getId()?>">Editar</a>
-                            <a class="btn btn-danger w-100 my-1" href="actions/producto/desactivar_producto_acc.php?id=<?= $producto->getId()?>">Eliminar</a>
+                            <a class="btn btn-kitchenpro btn btn-primary w-100 my-1" href="?section=editar_producto&id=<?= $producto->getId()?>">Editar</a>
+                            <a class="btn btn-kitchenpro btn btn-danger w-100 my-1" href="actions/producto/desactivar_producto_acc.php?id=<?= $producto->getId()?>">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
@@ -65,8 +65,8 @@
                         <td><?= $producto->formatearPrecio() ?></td>
                         <td><?= $producto->getStock()?->getStock() ?></td>
                         <td>
-                            <a class="btn btn-primary w-100 my-1" href="?section=editar_producto&id=<?= $producto->getId()?>">Editar</a>
-                            <a class="btn btn-success w-100 my-1" href="actions/producto/activar_producto_acc.php?id=<?= $producto->getId()?>">Restaurar</a>
+                            <a class="btn btn-kitchenpro btn btn-primary w-100 my-1" href="?section=editar_producto&id=<?= $producto->getId()?>">Editar</a>
+                            <a class="btn btn-kitchenpro btn btn-success w-100 my-1" href="actions/producto/activar_producto_acc.php?id=<?= $producto->getId()?>">Restaurar</a>
                         </td>
                     </tr>
                 <?php } ?>

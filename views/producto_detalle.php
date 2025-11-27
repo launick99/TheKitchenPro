@@ -41,7 +41,7 @@
             <p class="fw-bold h2 text-success"><?= $precio ?></p>
             <div class="my-5">
                 <?php foreach($categorias as $categoria){ ?>
-                    <a href="?section=categoria&categoria=<?= $categoria->getId() ?>" class="btn btn-primary">
+                    <a href="?section=categoria&categoria=<?= $categoria->getId() ?>" class="btn btn-kitchenpro btn btn-primary">
                         <?= $categoria->getNombre() ?>
                     </a>
                 <?php } ?>
@@ -53,7 +53,7 @@
                 <li>Pago con tarjeta de crédito y débito.</li>
             </ul>
             <!-- No hace nada -->
-            <button class="btn btn-warning w-100">
+            <button class="btn btn-kitchenpro btn btn-warning w-100">
                 Comprar ahora
             </button>
         </div>
