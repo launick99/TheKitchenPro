@@ -87,8 +87,7 @@ class Producto {
     }
 
     public function getStock(): ?Stock{
-        $stock = new Stock();
-        return $stock->getByProductoId($this->id);
+        return Stock::getByProductoId($this->id);
     }
 
     public function getCategorias(): ?array{
@@ -104,9 +103,9 @@ class Producto {
      * Obtiene todos los productos desde la base de datos.
      * @return array Lista de productos.
      */
-    public function getTodos(): array {
+    public static function getTodos(): array {
         $connection = Conexion::getConexion();
-        $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla}");
+        $PDOStatement = $connection->prepare("SELECT * FROM producto");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute();
 
@@ -118,9 +117,9 @@ class Producto {
      * @param int $id El ID del producto.
      * @return Producto|null El producto si se encuentra
      */
-    public function getProductById(int $id): ?self{
+    public static function getProductById(int $id): ?self{
         $connection = Conexion::getConexion();
-        $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla} WHERE id = :id");
+        $PDOStatement = $connection->prepare("SELECT * FROM producto WHERE id = :id LIMIT 1");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute(['id' => $id]);
 
@@ -184,7 +183,7 @@ class Producto {
             $sql .= " WHERE " . implode(" AND ", $query);
         }
 
-        $sql .= " GROUP BY p.id";
+        $sql .= " WHERE activo = 1 GROUP BY p.id";
 
         $PDOStatement = $connection->prepare($sql);
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
@@ -232,4 +231,28 @@ class Producto {
         }
         return $this->descripcion;
     }
+
+    /**
+     * Desactiva un producto 
+     * @return bool si se elimino
+    */
+    public function delete(): bool {
+        $conexion = Conexion::getConexion();
+
+        // $PDOStatement = $conexion->prepare("DELETE FROM producto WHERE id = :id");
+        // soy mas de dar de baja
+        $PDOStatement = $conexion->prepare("UPDATE producto SET activo = 0 WHERE id = :id");
+        return $PDOStatement->execute(['id' => $this->id]);
+    }
+
+    /**
+     * Activa un producto 
+     * @return bool si se activo
+    */
+    public function restore(): bool {
+        $conexion = Conexion::getConexion();
+        $PDOStatement = $conexion->prepare("UPDATE producto SET activo = 1 WHERE id = :id");
+        return $PDOStatement->execute(['id' => $this->id]);
+    }
+    
 }

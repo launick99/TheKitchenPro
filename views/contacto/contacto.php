@@ -1,3 +1,7 @@
+<?php
+    $usuario = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : new Usuario();
+?>
+
 <section class="container my-5" id="contacto">
     <h2 class="text-center mb-4">Contacto</h2>
     <p>¡Nos encanta saber de ti! Rellena el formulario y cuéntanos todo lo que necesitas.</p>
@@ -6,7 +10,7 @@
         <div class="row">
             <div class="col-12 col-sm-6 mb-2">
                 <label class="form-label" for="nombre">Nombres</label>
-                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ej: Marcos Eduardo" required>
+                <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ej: Marcos Eduardo" value="<?= $usuario->getNombre() ?>" required>
             </div>
             <div class="col col-sm-6 mb-2">
                 <label class="form-label" for="apellido">Apellido</label>
@@ -16,7 +20,7 @@
         <!-- Mail -->
         <div class="mb-2">
             <label class="form-label" for="mail">Email</label>
-            <input type="email" id="mail" name="mail" class="form-control" placeholder="Ej: MarcosEdu@gmail.com" required>
+            <input type="email" id="mail" name="mail" class="form-control" placeholder="Ej: MarcosEdu@gmail.com" value="<?= $usuario->getMail() ?>" required>
         </div>
         <!-- Telefono -->
         <div class="mb-2">

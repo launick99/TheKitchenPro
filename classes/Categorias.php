@@ -10,6 +10,7 @@ class Categorias {
     protected $id;
     protected $nombre;
     protected $activa;
+    protected $descripcion;
 
     /* ----------------------------------
     |  Getters
@@ -20,6 +21,10 @@ class Categorias {
 
     public function getNombre(): string {
         return $this->nombre;
+    }
+
+    public function getDescripcion(): string {
+        return $this->descripcion;
     }
 
     public function getActiva(): bool {
@@ -37,6 +42,10 @@ class Categorias {
         $this->activa = $activa;
     }
 
+    public function setDescripcion(string $descripcion) {
+        return $this->descripcion = $descripcion;
+    }
+
     /* ----------------------------------
     |  Métodos
     +---------------------------------- */
@@ -44,13 +53,13 @@ class Categorias {
     /**
      * Obtiene todas las categorías.
      */
-    public function getTodas(): ?array {
+    public static function getTodas(): ?array {
         $connection = Conexion::getConexion();
-        $PDOStatement = $connection->prepare("SELECT * FROM {$this->tabla}");
+        $PDOStatement = $connection->prepare("SELECT * FROM categorias");
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute();
 
-        return $PDOStatement->fetchAll() ?: null;
+        return $PDOStatement->fetchAll() ?? null;
     }
 
     /**
@@ -109,21 +118,22 @@ class Categorias {
     }
 
     /**
-     * Marca la categoría como inactiva.
-     */
-    public function desactivar(): bool {
-        $this->activa = 0;
-        $connection = Conexion::getConexion();
-        $PDOStatement = $connection->prepare("UPDATE {$this->tabla} SET activa = 0 WHERE id = :id");
+     * Desactiva una categoria 
+     * @return bool si se elimino
+    */
+    public function delete(): bool {
+        $conexion = Conexion::getConexion();
+        $PDOStatement = $conexion->prepare("UPDATE categorias SET activa = 0 WHERE id = :id");
         return $PDOStatement->execute(['id' => $this->id]);
     }
 
     /**
-     * Borra la categoría de la base de datos.
-     */
-    public function eliminar(): bool {
-        $connection = Conexion::getConexion();
-        $PDOStatement = $connection->prepare("DELETE FROM {$this->tabla} WHERE id = :id");
+     * Activa un categoria 
+     * @return bool si se activo
+    */
+    public function restore(): bool {
+        $conexion = Conexion::getConexion();
+        $PDOStatement = $conexion->prepare("UPDATE categorias SET activa = 1 WHERE id = :id");
         return $PDOStatement->execute(['id' => $this->id]);
     }
 }

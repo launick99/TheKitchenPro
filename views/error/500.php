@@ -5,7 +5,7 @@
         </h2>
         <img class="rounded mx-auto d-block" style="max-width: 256px;" src="./assets/img/500.webp" alt="error 500 con tostadita triste">
         <p class="h3">
-            <?= $error->getMessage() ?>
+            <?= $error->getMessage()  ?>
             <br>
             hm.. supongo que no aprobe la materia si sale esto..
         </p>

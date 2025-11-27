@@ -1,6 +1,6 @@
 <?php
     $id = $_GET['id'] ?? null;
-    $producto = (new Producto())->getProductById($id);
+    $producto = Producto::getProductById((int)$id);
 
     if (!$producto) {
         echo "<div class='alert alert-danger'>Producto no encontrado.</div>";

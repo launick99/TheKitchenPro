@@ -1,6 +1,11 @@
 <?php
     $paginas = ['inicio', 'catalogo', 'contacto'];
-    $paginasAdministracion = ['dashboard']
+    $paginasAdministracion = [
+        'dashboard' => 'dashboard', 
+        'productos' => 'dashboard_productos',
+        'categorias' => 'dashboard_categorias'
+    ];
+
 ?>
 
 <header>
@@ -28,17 +33,17 @@
                             </a>
                         </li>
                     <?php } ?>
-                    <?php if($usuario->tieneRol()){ ?>
+                    <?php if($usuario?->tieneRol()){ ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="usuarioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Administración
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="usuarioDropdown">
-                                <?php foreach ($paginasAdministracion as $pagina){ ?>
+                                <?php foreach ($paginasAdministracion as $nombre => $pagina){ ?>
                                     <?php if(Permisos::usuarioPuedeVer($usuario, Vista::getVistaporNombre($pagina))) { ?> 
                                         <li>
                                             <a class="nav-link <?= Vista::isActive($pagina, $seccion) ? 'active' : '' ?>" href="?section=<?= $pagina ?>">
-                                                <?php echo ucfirst($pagina) ?>
+                                                <?php echo ucfirst($nombre) ?>
                                             </a>
                                         </li>
                                     <?php } ?>

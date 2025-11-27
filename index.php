@@ -38,7 +38,9 @@
         <main class="flex-grow-1">
             <?php 
                 try {
-                    include_once($ubicacion); 
+                    if (!@include_once($ubicacion)) {
+                        throw new Exception("Error al incluir la vista: $ubicacion", 500);
+                    }
                 } catch (\Throwable $error) {
                     include_once('views/error/500.php'); 
                 }

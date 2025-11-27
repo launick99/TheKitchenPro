@@ -8,8 +8,9 @@ class Usuario
     protected $tabla = 'usuarios';
 
     protected $id;
+    protected $nombre_completo;
     protected $nombre_usuario; // Nombre de usuario
-    protected $email;
+    protected $mail;
     protected $password; // Hasheada
     protected $rol_id;
 
@@ -20,19 +21,23 @@ class Usuario
         return $this->id;
     }
 
+    public function getNombre(): string{
+        return $this->nombre_completo;
+    }
+
     public function getNombreUsuario(): string{
         return $this->nombre_usuario;
     }
 
-    public function getEmail(): string{
-        return $this->email;
+    public function getMail(): string{
+        return $this->mail;
     }
 
     public function getPassword(): string{
         return $this->password;
     }
 
-    public function getRolId(): int{
+    public function getRolId(): ?int{
         return $this->rol_id;
     }
     /* ----------------------------------
@@ -42,12 +47,16 @@ class Usuario
         $this->id = $id;
     }
 
+    public function setNombre(string $nombre){
+        return $this->nombre_completo = $nombre;
+    }
+
     public function setNombreUsuario($nombre_usuario){
         $this->nombre_usuario = $nombre_usuario;
     }
 
-    public function setEmail($email){
-        $this->email = $email;
+    public function setMail($mail){
+        $this->mail = $mail;
     }
 
     public function setPassword($password){
@@ -63,7 +72,7 @@ class Usuario
      * @param string $usuario
      * @return Usuario|null
      */
-    public function findByUsername(string $usuario): self{
+    public function findByUsername(string $usuario): ?self{
         $conexion = Conexion::getConexion();
         $query = "SELECT * FROM {$this->tabla} WHERE nombre_usuario = :usuario LIMIT 1";
 

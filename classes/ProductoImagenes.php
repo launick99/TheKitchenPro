@@ -111,30 +111,4 @@ class ProductoImagenes {
             'id' => $this->id,
         ]);
     }
-
-    /**
-     * Marca una imagen como inactiva.
-     */
-    public function desactivar(): bool {
-        $this->activo = 0;
-
-        $connection = Conexion::getConexion();
-        $query = "UPDATE {$this->tabla} SET activo = 0 WHERE id = :id";
-
-        $PDOStatement = $connection->prepare($query);
-
-        return $PDOStatement->execute(['id' => $this->id]);
-    }
-
-    /**
-     * Borra una imagen de la base de datos.
-     */
-    public function eliminar(): bool {
-        $connection = Conexion::getConexion();
-        $query = "DELETE FROM {$this->tabla} WHERE id = :id";
-
-        $PDOStatement = $connection->prepare($query);
-
-        return $PDOStatement->execute(['id' => $this->id]);
-    }
 }
