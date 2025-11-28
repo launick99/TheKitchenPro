@@ -21,7 +21,7 @@ class Usuario
         return $this->id;
     }
 
-    public function getNombre(): string{
+    public function getNombre(): ?string{
         return $this->nombre_completo;
     }
 
@@ -29,7 +29,7 @@ class Usuario
         return $this->nombre_usuario;
     }
 
-    public function getMail(): string{
+    public function getMail(): ?string{
         return $this->mail;
     }
 
