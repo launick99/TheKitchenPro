@@ -130,3 +130,9 @@ a.nav-link.active{
     height: 64px !important;
     object-fit: cover;
 }
+
+.imagen-cuadro {
+    width: 128px;
+    height: 128px;
+    position: relative;
+}

@@ -10,7 +10,9 @@ class Imagen{
             if(file_exists($ubicacion.$imagen)){
                 return $ubicacion.$imagen;
             }
-            return $imagen;
+            if (filter_var($imagen, FILTER_VALIDATE_URL)) {
+                return $imagen;
+            }
         }
         return self::imageNotFound();
     }

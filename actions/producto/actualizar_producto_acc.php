@@ -3,8 +3,9 @@
     $postData = $_POST;
     $datosArchivo = $_FILES;
 
-    $directorio = '../../assets/img/productos';
+    $directorio = '../../assets/img/productos/';
 
+    $id       = $postData['id'] ?? '';
     $nombre       = $postData['nombre'] ?? '';
     $descripcion  = $postData['descripcion'] ?? '';
     $precio       = $postData['precio'] ?? '';
@@ -37,7 +38,7 @@
         $errores[] = "Debes seleccionar al menos una categoría.";
     }
 
-    if($imagen) {
+    if($imagen['name']) {
         $permitidos = ['image/webp'];
         if(!in_array($imagen['type'], $permitidos)) {
             $errores[] = "El archivo de imagen debe ser WEBP.";
@@ -52,6 +53,7 @@
     +---------------------------------- */
     if(!empty($errores)) {
         $url = 
+            '&id='         . urlencode($id) .
             '&error='      . urlencode(implode(' | ', $errores)) .
             '&nombre='     . urlencode($nombre) .
             '&descripcion='. urlencode($descripcion) .
@@ -63,46 +65,51 @@
             $url .= '&categorias[]=' . urlencode($cat);
         }
 
-        header("Location: ../../?section=add_producto$url");
-        exit;
+        header("Location: ../../?section=editar_producto$url");
+        return;
     }
 
     /* ----------------------------------
     |  Guardar
     +---------------------------------- */
-    try {
-        $imagen = Imagen::subirImagen($directorio, $imagen);
-        $fecha = date('Y-m-d');
+    $producto = Producto::getProductById($id);
+    $existe = $imagen['name'] ? true : false;
 
-        $producto = Producto::insert(
+    if($existe){
+        Imagen::borrarImagen($producto->getImagen($directorio));
+        $imagen = Imagen::subirImagen($directorio, $imagen);
+    }
+
+    try {
+        $actualizado = Producto::update(
+            $id,
             $nombre,
             $descripcion,
             $precio,
-            $fecha,
+            $producto->getFechaIngreso(),
             true,
-            $imagen
+            $existe ? $imagen : $producto->getImagenReal()
         );
 
+        ProductoCategoria::deleteTodosProducto($id);
         foreach ($categorias as $categoria) {
             ProductoCategoria::insert(
-                $producto,
+                $id,
                 $categoria
             );
         }
 
-        Stock::insert(
-            $producto,
+        Stock::update(
+            $id,
             $stock,
             $stock_minimo
         );
 
     } catch (\Throwable $e) {
         throw $e;
-        
     }
 
     // ir a otra pantalla para agregar info
-    header("Location: ../../?section=add_producto_info&id=$producto");
+    header("Location: ../../?section=add_producto_info&id=$id");
     exit;
-
 ?>

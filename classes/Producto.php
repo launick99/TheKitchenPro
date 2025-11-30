@@ -32,11 +32,15 @@ class Producto {
     public function getFechaIngreso(): string{ 
         return $this->fechaIngreso; 
     }
+
+    public function getImagenReal(): string{ 
+        return$this->imagen; 
+    }
     /**
      * Devuelve la url de la imagen del prodycto o una por defecto si no existe
      */
-    public function getImagen(): string{ 
-        return Imagen::buscarImagen($this->imagen, 'assets/img/productos/'); 
+    public function getImagen(?string $url = 'assets/img/productos/'): string{ 
+        return Imagen::buscarImagen($this->imagen, $url); 
     }
     public function getActivo(): bool{
         return $this->activo;
@@ -82,16 +86,23 @@ class Producto {
 
     public function getDatosTecnicos(): ?array{
         $datosTecnicos = new DatosTecnicos();
-        return $datosTecnicos->getByProductoId($this->id);
+        return DatosTecnicos::getByProductoId($this->id);
     }
 
+    /**
+     * Obtiene el stock de un producto
+     * @return Stock
+     */
     public function getStock(): ?Stock{
         return Stock::getByProductoId($this->id);
     }
 
+    /**
+     * Obtiene las categorias a las que esta agregada un prodycto
+     * @return array
+     */
     public function getCategorias(): ?array{
-        $productoCategoria = new ProductoCategoria();
-        return $productoCategoria->getCategoriasPorProductoId($this->id);
+        return ProductoCategoria::getCategoriasPorProductoId($this->id);
     }
 
     /* ----------------------------------
@@ -232,8 +243,17 @@ class Producto {
         return $this->descripcion;
     }
 
-    /** */
-    public static function insert(string $nombre, string $descripcion, float $precio, string $fechaIngreso, bool $activo = true, ?string $imagen = null): ?int{
+    /**
+     * Agrega un nuevo producto a la base de datos
+     * @param string $nombre del producto
+     * @param string $descripcion
+     * @param float $precio
+     * @param string $fechaIngreso
+     * @param bool|null $activo = true
+     * @param string|null $imagen
+     * @return int id del producto insertado
+     */
+    public static function insert(string $nombre, string $descripcion, float $precio, string $fechaIngreso, ?bool $activo = true, ?string $imagen = null): ?int{
         $conexion = Conexion::getConexion();
         $sql = "INSERT INTO producto VALUES (NULL, :nombre, :descripcion, :precio, :imagen, :fechaIngreso, :activo)";
 
@@ -249,6 +269,45 @@ class Producto {
         ]);
 
         return (int) $conexion->lastInsertId();
+    }
+
+    /**
+     * Actualiza un producto
+     * @param int $id
+     * @param string $nombre
+     * @param string $descripcion
+     * @param float $precio
+     * @param string $fechaIngreso
+     * @param bool|null $activo
+     * @param string|null $imagen
+     * @return bool true si se actualizo
+     */
+    public static function update(int $id, string $nombre, string $descripcion, float $precio, string $fechaIngreso, ?bool $activo = true, ?string $imagen = null): bool {
+        $conexion = Conexion::getConexion();
+        $producto = Producto::getProductById($id);
+
+        $sql = "UPDATE producto
+                SET nombre = :nombre,
+                    descripcion = :descripcion,
+                    precio = :precio,
+                    imagen = :imagen,
+                    fechaIngreso = :fechaIngreso,
+                    activo = :activo
+                WHERE id = :id";
+
+        $PDOStatement = $conexion->prepare($sql);
+
+        $PDOStatement->execute([
+            'id'            => $id,
+            'nombre'        => $nombre,
+            'descripcion'   => $descripcion,
+            'precio'        => $precio,
+            'fechaIngreso'  => $fechaIngreso,
+            'activo'        => $activo ? 1 : 0,
+            'imagen'        => $imagen ?? $producto->getImagen()
+        ]);
+
+        return $PDOStatement->rowCount() > 0;
     }
 
     /**

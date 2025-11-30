@@ -59,6 +59,12 @@ class ProductoCategoria
         return $resultado;
     }
 
+    /**
+     * Agrega una categoria a un producto
+     * @param int $producto_id
+     * @param int $categoria_id
+     * @return int id del registro insertado
+     */
     public static function insert(int $producto_id, int $categoria_id): int{
         $conexion = Conexion::getConexion();
         $query = 'INSERT INTO producto_categoria VALUES (NULL, :producto_id, :categoria_id)';
@@ -69,4 +75,17 @@ class ProductoCategoria
         ]);
         return (int) $conexion->lastInsertId();
     }
+
+    /**
+     * Elimina todas las categorias de un producto
+     * @param int $producto_id
+     * @return bool
+     */
+    public static function deleteTodosProducto(int $producto_id): bool{
+        $conexion = Conexion::getConexion();
+        $PDOStatement = $conexion->prepare("DELETE FROM producto_categoria WHERE producto_id = :producto_id");
+        $resultado = $PDOStatement->execute(['producto_id' => $producto_id]);
+        return (bool) $resultado;
+    }
+    
 }

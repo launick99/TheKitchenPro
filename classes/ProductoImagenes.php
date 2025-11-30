@@ -91,6 +91,19 @@ class ProductoImagenes {
     }
 
     /**
+     * Elimina
+     * @param int $id
+     * @return bool
+     */
+    public static function delete(int $id): bool{
+        $conexion = Conexion::getConexion();
+        $PDOStatement = $conexion->prepare("DELETE FROM producto_imagenes WHERE id = :id");
+        $resultado = $PDOStatement->execute(['id' => $id,]);
+        return (bool) $resultado;
+    }
+
+
+    /**
      * Agrega una imagen
      * @param int $producto_id
      * @param string $url la ubicacion del archivo

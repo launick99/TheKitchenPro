@@ -82,7 +82,11 @@ class Stock {
     }
 
     /**
-     * 
+     * Agrega stock 
+     * @param int $producto_id
+     * @param int $stock
+     * @param int $stock_minimo
+     * @return int producto_id
      */
     public static function insert(int $producto_id, int $stock, int $stock_minimo): int{
         $conexion = Conexion::getConexion();
@@ -97,4 +101,32 @@ class Stock {
         ]);
         return (int) $conexion->lastInsertId();
     }
+
+    /**
+     * Agrega stock 
+     * @param int $producto_id
+     * @param int $stock
+     * @param int $stock_minimo
+     * @return int producto_id
+     */
+    public static function update(int $producto_id, int $stock, int $stock_minimo): int{
+        $conexion = Conexion::getConexion();
+        $fecha = Date('Y-m-d');
+        $q ='UPDATE producto_stock 
+                SET stock = :stock,
+                    stock_minimo = :stock_minimo,
+                    actualizado = :fecha
+                WHERE producto_id = :producto_id
+            ';
+        $PDOStatement = $conexion->prepare($q);
+        $PDOStatement->execute([
+            'producto_id' => $producto_id,
+            'stock' => $stock,
+            'stock_minimo' => $stock_minimo,
+            'fecha' => $fecha
+        ]);
+        return $PDOStatement->rowCount() > 0;
+    }
+
+    
 }
