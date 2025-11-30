@@ -11,7 +11,7 @@
 
     $usuario = $_SESSION['usuario'] ?? null; 
 
-    if (!Permisos::usuarioPuedeVer($usuario, $vista)) {
+    if (!Autorizacion::usuarioPuedeVer($usuario, $vista)) {
         $vista = $vista->vistaNoAutorizada(); 
     }
 

@@ -1,8 +1,36 @@
 <?php
 
-class Permisos
-{
-    protected $tabla =  "rol_vista";
+/**
+ * Clase que se ocupa de la autorizacion del usuario
+ */
+class Autorizacion{
+
+    /**
+     * Logea el usuario
+     * @param string $usuario
+     * @param string $password
+     * @return bool|null retorna null si no se encontro el usuario, true/false si se pudo logear
+     */
+    public static function logIn(string $usuario, string $password): ?bool{
+        $datosUsuario = Usuario::findByUsername($usuario);
+        if(!$datosUsuario){
+            return null;
+        }
+        if (password_verify($password, $datosUsuario->getPassword())) {
+            $_SESSION['usuario'] = $datosUsuario;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Deslogea el usuario
+     */
+    public static function logOut(): void{
+        if(isset($_SESSION['usuario'])){
+            unset($_SESSION['usuario']);
+        }
+    }
 
     /**
      * Verifica si un usuario puede ver una vista determinada
@@ -53,4 +81,5 @@ class Permisos
         $resultado = $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         return $resultado ?? false;
     }
+    
 }

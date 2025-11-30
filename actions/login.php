@@ -1,25 +1,17 @@
 <?php
 require_once '../config/Database.php';
-require_once '../classes/Usuario.php';
-require_once '../classes/Conexion.php';
+require_once '../functions/autoload.php';
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: ../login.php");
     exit;
 }
 
-/**
- * Limpia un dato de entrada
- * @param string $dato
- */
-function limpiar(string $dato) {
-    return htmlspecialchars(trim($dato));
-}
 
 $errores = [];
 
-$mail = limpiar($_POST['username'] ?? '');
-$contrasenia = limpiar($_POST['password'] ?? '');
+$mail = trim($_POST['username'] ?? '');
+$contrasenia = trim($_POST['password'] ?? '');
 
 if (empty($mail) || strlen($mail) < 5) {
     $errores[] = "El nombre es obligatorio y debe tener al menos 5 caracteres.";
@@ -28,32 +20,33 @@ if (empty($contrasenia)) {
     $errores[] = "La contraseña es obligatoria.";
 }
 
+if(count($errores) != 0){
+    $_SESSION['login_errores'] = $errores;
+    header("Location: ../?section=login");
+    return;
+}
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+$usuario = Autorizacion::logIn($mail, $contrasenia);
 
-if (count($errores) == 0) {
-    $usuario = (new Usuario())->login($mail, $contrasenia);
-
-    if ($usuario) {
-        $_SESSION['usuario'] = $usuario;
-        
-        setcookie(
-            'usuario_cookie',
-            $usuario->getNombreUsuario() ?? $usuario->getId(),
-            time() + 3600,
-            '/', 
-            '',
-            false,
-            true
-        );
-                
-        header("Location: ../?section=inicio");
-        exit;
-    } else {
-        $errores[] = "Usuario o contraseña incorrectos.";
+if($usuario){
+    $usuario = $_SESSION['usuario'];
+    if($usuario->tieneRol()){
+        header("Location: ../?section=dashboard");
+        return;
     }
+    header("Location: ../?section=inicio");
+    return;
 }
+
+if(is_null($usuario)){
+    $errores[] = "Usuario no encontrado :(";
+}else{
+    $errores[] = "Contraseña incorrecta";
+}
+
 
 $_SESSION['login_errores'] = $errores;
 header("Location: ../?section=login");

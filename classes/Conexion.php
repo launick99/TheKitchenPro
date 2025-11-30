@@ -3,7 +3,6 @@ require_once __DIR__ . '/../config/Database.php';
 
 /**
  * Clase para manejar la conección a la DB
- * @method getConnection Obtener conexión a la base de datos
  */
 class Conexion{
     protected const DB_HOST = DB_HOST;

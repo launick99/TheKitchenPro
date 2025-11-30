@@ -2,10 +2,6 @@
 
 /**
  * Clase que se ocupa de manejar las vistas
- * @method void VistaExiste - verifica que la vista exista
- * @method Vista vistaNoAutorizada - devuelve la pantalla 403
- * @method Vista validarVista - valida que la vista este activa y exista
- * @method bool isActive - valida si el nombre de la vista dado es igual al de la vista 
  */
 class Vista{
 

@@ -26,7 +26,7 @@
                             </a>
                         </li>
                     <?php } ?>
-                    <?php if(Permisos::usuarioPuedeVer($usuario, Vista::getVistaporNombre('alumno'))){ ?>
+                    <?php if(Autorizacion::usuarioPuedeVer($usuario, Vista::getVistaporNombre('alumno'))){ ?>
                         <li class="nav-item">
                             <a class="nav-link <?= Vista::isActive('alumno', $seccion) ? 'active' : '' ?>" href="?section=alumno">
                                 Alumno
@@ -40,7 +40,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="usuarioDropdown">
                                 <?php foreach ($paginasAdministracion as $nombre => $pagina){ ?>
-                                    <?php if(Permisos::usuarioPuedeVer($usuario, Vista::getVistaporNombre($pagina))) { ?> 
+                                    <?php if(Autorizacion::usuarioPuedeVer($usuario, Vista::getVistaporNombre($pagina))) { ?> 
                                         <li>
                                             <a class="nav-link <?= Vista::isActive($pagina, $seccion) ? 'active' : '' ?>" href="?section=<?= $pagina ?>">
                                                 <?php echo ucfirst($nombre) ?>
