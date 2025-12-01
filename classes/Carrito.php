@@ -3,6 +3,12 @@
 class Carrito{
 
 
+    /**
+     * Devuelve un lindo valor hardcodeado de envio
+     */
+    public static function getEnvio(): float{
+        return 10000.00;
+    }
 
     /**
      * devuelve los items del carrito
@@ -43,10 +49,19 @@ class Carrito{
     }
 
     /**
-     * 
+     * Actualiza la cantidad de un producto
+     * @param int $id del producto
+     * @param int $cantidad
      */
-    public static function modificar(){
-
+    public static function actualizarCantidad(int $productoId, int $cantidad): void {
+        $producto = Producto::getProductById($productoId);
+        if($cantidad >= $producto->getStock()?->getStock()){
+            throw new Exception("Error: no hay suficientes unidades");
+            return;
+        }
+        if(isset($_SESSION['carrito'][$productoId])){
+            $_SESSION['carrito'][$productoId]['cantidad'] = $cantidad;
+        }
     }
 
     /**
@@ -60,7 +75,7 @@ class Carrito{
                 $total += $item['producto']?->getPrecio() * $item['cantidad'];
             }
         }
-        return $total;
+        return $total + self::getEnvio();
     }
 }
 

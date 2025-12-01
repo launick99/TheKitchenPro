@@ -113,17 +113,17 @@
 </section>
 
 <script>
-document.getElementById('imagen').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    const preview = document.getElementById('preview');
-    if(!file){
-        preview.src = '<?= Imagen::imageNotFound() ?>';
-        return;
-    }
-    const reader = new FileReader();
-    reader.onload = function(event){
-        preview.src = event.target.result;
-    };
-    reader.readAsDataURL(file);
-});
+    document.getElementById('imagen').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        const preview = document.getElementById('preview');
+        if(!file){
+            preview.src = '<?= Imagen::imageNotFound() ?>';
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(event){
+            preview.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
 </script>

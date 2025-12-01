@@ -148,11 +148,12 @@ class Producto {
         }
         
         $categoriasIds = [];
+        $in = [];
         foreach ($categorias as $categoria) {
             $categoriasIds[] = $categoria->getId();
+            $in[] = '?';
         }
-
-        $in = implode(',', array_fill(0, count($categoriasIds), '?'));
+        $in = implode(',', $in);
 
         $sql = "
             SELECT producto.*, COUNT(*) AS coincidencias

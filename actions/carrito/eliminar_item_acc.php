@@ -5,15 +5,14 @@
     }
 
     $id = $_GET['id'] ?? false;
-    $cantidad = $_GET['cantidad'] ?? 1;
 
     if($id){
-        Carrito::agregar($id, $cantidad);
-        Alerta::agregarAlerta("success", "producto agregado!");
+        Carrito::remover($id);
+        Alerta::agregarAlerta("success", "Producto Eliminado");
         header('location: ../../index.php?section=carrito');
         return;
     }
-    Alerta::agregarAlerta("danger", "No se pudo agregar al carrito");
+    Alerta::agregarAlerta("danger", "No se pudo eliminar el producto del carrito");
     header('location: ../../index.php');
     return;
 ?>

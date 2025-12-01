@@ -69,13 +69,16 @@
             <div class="d-flex flex-col flex-md-row gap-5 justify-content-start my-5">
                 <!-- No hace nada -->
                 <div class="d-flex gap-1 justify-content-start">
-                    <div class="input-group mb-3">
-                        <input class="form-control" type="number" min="1" max="<?= $producto->getStock()?->getStock() ?>" value="1">
-                        <button class="btn btn-warning">
-                            <i class="fa-solid fa-cart-shopping fa-lg me-2" style="width:32px"></i>
-                            <span class="fw-bold">AGREGAR</span>
-                        </button>
-                    </div>
+                    <form action="actions/carrito/agregar_item_acc.php" method="GET">
+                        <div class="input-group mb-3">
+                            <input type="hidden" name="id" id="id" value="<?= $producto->getId() ?>">
+                            <input class="form-control" id="cantidad" name="cantidad" type="number" min="1" max="<?= $producto->getStock()?->getStock() ?>" value="1">
+                            <button class="btn btn-warning">
+                                <i class="fa-solid fa-cart-shopping fa-lg me-2" style="width:32px"></i>
+                                <span class="fw-bold">AGREGAR</span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
                 <div class="mb-3">
                     <button class="btn btn-warning">

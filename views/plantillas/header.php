@@ -52,11 +52,19 @@
                         </li>
                     <?php } ?>
                     <?php if (isset($_SESSION['usuario'])): ?>
+                        <li class="nav-item ms-lg-5">
+                            <a class="nav-link <?= Vista::isActive('carrito', $seccion) ? 'active' : '' ?>" href="?section=<?= 'carrito' ?>">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="usuarioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <?= htmlspecialchars($_SESSION['usuario']->getNombreUsuario()) ?>
+                                <i class="fa-solid fa-user" title="<?= htmlspecialchars($_SESSION['usuario']->getNombreUsuario()) ?>"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="usuarioDropdown">
+                                <li class="nav-link text-dark">
+                                    <?= htmlspecialchars($_SESSION['usuario']->getNombreUsuario()) ?>
+                                </li>
                                 <li>
                                     <a class="nav-link ps-2" href="?section=historial">
                                         Historial
