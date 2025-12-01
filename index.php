@@ -27,7 +27,7 @@
         <!-- estilos -->
         <link href="./assets/css/bootstrap.css" rel="stylesheet">
         <link rel="shortcut icon" href="./assets/img/favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" href="./app.css">
+        <link rel="stylesheet" href="./assets/css/app.css">
         <title><?= "$pageTitle | " ?>The Kitchen Pro</title>
         <!-- fontawesome -->
         <script src="https://kit.fontawesome.com/80c9de9a04.js" crossorigin="anonymous"></script>
