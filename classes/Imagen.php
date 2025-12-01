@@ -36,11 +36,11 @@ class Imagen{
     public static function subirImagen(string $directorio, array $datosArchivo): string{
         $archivo = explode('.', $datosArchivo['name']);
         $extension = end($archivo);
-        $nombre = time().".$extension";
+        $nombre = $archivo[0]."_".time().".$extension";
         $archivoSubido = move_uploaded_file($datosArchivo['tmp_name'], "$directorio/$nombre");
 
         if(!$archivoSubido){
-            throw new Exception("Error, no se puede subir el archivo");
+            throw Alerta::agregarAlerta("danger", "Error, no se puede subir el archivo");
         }
         return $nombre;
     }

@@ -82,21 +82,18 @@
         }
 
         if (!empty($imagenes)) {
-            foreach ($imagenes['name'] as $i => $nombreArchivo) {
-                $guardada = Imagen::subirImagen($carpetaProducto, [
+            foreach ($imagenes['name'] as $x => $nombreArchivo) {
+                $nombreImagen = Imagen::subirImagen($carpetaProducto, [
                     'name'     => $nombreArchivo,
-                    'tmp_name' => $imagenes['tmp_name'][$i],
-                    'type'     => $imagenes['type'][$i],
-                    'size'     => $imagenes['size'][$i],
-                    'error'    => $imagenes['error'][$i]
+                    'tmp_name' => $imagenes['tmp_name'][$x],
+                    'type'     => $imagenes['type'][$x],
+                    'size'     => $imagenes['size'][$x],
+                    'error'    => $imagenes['error'][$x]
                 ]);
-    
-                if ($guardada) {
-                    ProductoImagenes::insert($producto_id, $guardada);
-                }
+                ProductoImagenes::insert($producto_id, $nombreImagen);
             }
         }
-
+        
         foreach($imagenesEliminadas as $idImagen){
             $productoImagen = ProductoImagenes::getById($idImagen);
             Imagen::borrarImagen($productoImagen->getUrl("$directorioBase/"));
