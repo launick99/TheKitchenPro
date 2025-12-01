@@ -17,8 +17,6 @@
 
     $ubicacion = $vista->getUbicacion();
     $pageTitle = $vista->getTitulo();
-
-    $error = $_GET['error'] ?? null;
 ?>
 
 <!DOCTYPE html>

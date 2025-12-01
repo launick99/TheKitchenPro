@@ -1,5 +1,8 @@
 <?php
     require_once '../../functions/autoload.php';
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
 
     $nombre      = $_POST['nombre'] ?? null;
     $descripcion = $_POST['descripcion'] ?? null;

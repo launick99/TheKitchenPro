@@ -1,5 +1,9 @@
 <?php
     require_once '../../functions/autoload.php';
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    
     $postData = $_POST;
     $datosArchivo = $_FILES;
 

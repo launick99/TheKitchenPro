@@ -1,5 +1,8 @@
 <?php
     require_once '../../functions/autoload.php';
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
 
     $id = $_GET['id'] ?? null;
     $error = false;

@@ -23,8 +23,8 @@ class ProductoImagenes {
         return $this->producto_id;
     }
 
-    public function getUrl(): string{
-        return Imagen::buscarImagen($this->url, "assets/img/productos/".$this->getProductoId()."/");
+    public function getUrl(string $ubicacion = "assets/img/productos/"): string{
+        return Imagen::buscarImagen($this->url, $ubicacion.$this->getProductoId()."/");
     }
 
     public function getActivo(): bool{
@@ -68,10 +68,12 @@ class ProductoImagenes {
 
     /**
      * Obtiene una imagen por su ID.
+     * @param id
      */
-    public function getById(int $id): ?self {
+    public static function getById(int $id): ?self {
         $connection = Conexion::getConexion();
-        $query = "SELECT * FROM {$this->tabla} WHERE id = :id";
+        $query = "SELECT * FROM producto_imagenes WHERE id = :id LIMIT 1";
+
         $PDOStatement = $connection->prepare($query);
         $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
         $PDOStatement->execute(['id' => $id]);

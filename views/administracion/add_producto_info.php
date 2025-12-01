@@ -41,17 +41,13 @@ $imagenesExistentes = $producto->getImagenes();
             <div id="imagenes-container" class="d-flex flex-wrap gap-3">
                 <?php foreach ($imagenesExistentes as $img){ ?>
                     <div class="imagen-cuadro position-relative imagen-existente" data-id="<?= $img->getId() ?>">
-
-                        <img src="<?= $img->getUrl() ?>" class="w-100 h-100 rounded" style="object-fit:cover;">
-
+                        <img src="<?= $img->getUrl() ?>" class="rounded" style="object-fit:cover;width:128px;height:128px;">
                         <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 eliminar-imagen">
                             x
                         </button>
-                        <input type="hidden" name="imagenes_existentes[]" value="<?= $img->getId() ?>">
                     </div>
                 <?php } ?>
-                <div id="agregar-imagen" class="imagen-cuadro d-flex justify-content-center align-items-center border border-secondary rounded"
-                     style="cursor:pointer; height:128px; width:128px;">
+                <div id="agregar-imagen" class="imagen-cuadro d-flex justify-content-center align-items-center border border-secondary rounded" style="cursor:pointer; height:128px; width:128px;">
                     <span class="fs-2">+</span>
                 </div>
             </div>
@@ -96,6 +92,7 @@ const eliminadasContainer = document.getElementById('imagenes-eliminadas');
 botonAgregar.addEventListener('click', () => {
     const input = document.createElement('input');
     input.type = "file";
+    input.name = "imagenes[]";
     input.accept = ".webp";
     input.classList.add("d-none");
 
