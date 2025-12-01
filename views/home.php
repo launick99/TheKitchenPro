@@ -1,7 +1,7 @@
 <div class="w-100 mb-4">
     <img src="./assets/img/banners/oferta_random.jpg" alt="Oferta! 2x1 en no recuerdo" class="img-fluid" style="min-height: 100px; object-fit: cover;">
 </div>
-<section class="container" id="introduccion">
+<section class="container my-5" id="introduccion">
     <!-- estaria bueno otro nombre -->
     <h2 class="text-center mb-4">¡Bienvenido a The Kitchen Pro!</h2>
     <p>
@@ -20,7 +20,7 @@
     </p>
 </section>
 <section id="productos" style="background-color:#ffffe9">
-    <div class="container py-2">
+    <div class="container py-5">
         <h2 class="text-center">¡Pensados para vos!</h2>
         <ul class="categorias d-flex justify-content-between list-unstyled py-4">
             <li>
@@ -50,7 +50,7 @@
         </ul>
     </div>
 </section>
-<section class="container py-2" id="informacion">
+<section class="container my-5" id="informacion">
     <h2 class="text-center mb-4">Compromiso</h2>
     <div class="row">
         <!-- https://www.svgrepo.com/ -->

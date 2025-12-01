@@ -23,15 +23,15 @@
                 <?php if($producto->getActivo()){ ?>
                     <tr>
                         <td>
-                            <img id="mainImage" class="img-thumbnail" style="max-width: 128px;" src="<?= $producto->getImagen() ?>" alt="Imagen principal del producto">
+                            <img id="<?= htmlspecialchars($producto->getNombre()) ?>" class="rounded" style="width: 128px; height: 128px;" src="<?= $producto->getImagen() ?>" alt="Imagen principal del producto">
                         </td>
-                        <th><?= $producto->getNombre() ?></th>
+                        <th class="w-25"><?= $producto->getNombre() ?></th>
                         <td><?= $producto->getDescripcionCorta() ?></td>
                         <td><?= $producto->formatearPrecio() ?></td>
                         <td><?= $producto->getStock()?->getStock() ?></td>
-                        <td>
-                            <a class="btn btn-kitchenpro btn btn-primary w-100 my-1" href="?section=editar_producto&id=<?= $producto->getId()?>">Editar</a>
-                            <a class="btn btn-kitchenpro btn btn-danger w-100 my-1" href="actions/producto/desactivar_producto_acc.php?id=<?= $producto->getId()?>">Eliminar</a>
+                        <td style="width: 128px;">
+                            <a class="btn btn-primary w-100 my-1" href="?section=editar_producto&id=<?= $producto->getId()?>">Editar</a>
+                            <a class="btn btn-danger w-100 my-1" href="actions/producto/desactivar_producto_acc.php?id=<?= $producto->getId()?>">Eliminar</a>
                         </td>
                     </tr>
                 <?php } ?>
@@ -46,7 +46,7 @@
             </tr>
             <tr>
                 <th></th>
-                <th>Producto</th>
+                <th class="w-25">Producto</th>
                 <th>Descripcion</th>
                 <th>Precio</th>
                 <th>Stock</th>
@@ -58,15 +58,15 @@
                 <?php if(!$producto->getActivo()){ ?>
                     <tr>
                         <td>
-                            <img id="mainImage" class="img-thumbnail" style="max-width: 128px;"  src="<?= $producto->getImagen() ?>" alt="Imagen principal del producto">
+                            <img id="<?= htmlspecialchars($producto->getNombre()) ?>" class="rounded" style="width: 128px; height: 128px;"  src="<?= $producto->getImagen() ?>" alt="Imagen principal del producto">
                         </td>
                         <th><?= $producto->getNombre() ?></th>
                         <td><?= $producto->getDescripcionCorta() ?></td>
                         <td><?= $producto->formatearPrecio() ?></td>
                         <td><?= $producto->getStock()?->getStock() ?></td>
-                        <td>
-                            <a class="btn btn-kitchenpro btn btn-primary w-100 my-1" href="?section=editar_producto&id=<?= $producto->getId()?>">Editar</a>
-                            <a class="btn btn-kitchenpro btn btn-success w-100 my-1" href="actions/producto/activar_producto_acc.php?id=<?= $producto->getId()?>">Restaurar</a>
+                        <td style="width: 128px;">
+                            <a class="btn btn-primary w-100 my-1" href="?section=editar_producto&id=<?= $producto->getId()?>">Editar</a>
+                            <a class="btn btn-success w-100 my-1" href="actions/producto/activar_producto_acc.php?id=<?= $producto->getId()?>">Restaurar</a>
                         </td>
                     </tr>
                 <?php } ?>
