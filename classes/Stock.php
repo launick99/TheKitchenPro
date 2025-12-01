@@ -82,6 +82,32 @@ class Stock {
     }
 
     /**
+     * Retorna el estado del stock
+     */
+    public function getEstado(): string{
+        if(!$this->tieneStock()){
+            return "Sin stock";
+        }
+        if($this->stockBajo()){
+            return "Últimos";
+        }
+        return "En stock";
+    }
+
+    /**
+     * Retorna el color del stock
+     */
+    public function getColor(): string{
+        if(!$this->tieneStock()){
+            return "danger";
+        }
+        if($this->stockBajo()){
+            return "warning";
+        }
+        return "success";
+    }
+
+    /**
      * Agrega stock 
      * @param int $producto_id
      * @param int $stock

@@ -82,11 +82,9 @@
                                 <div class="card-footer" style="border-top: none; background: none;">
                                     <div class="d-flex justify-content-between align-items-center my-2">
                                         <p class="card-text">
-                                            <?php if ($producto->estaDisponible()): ?>
-                                                <span class="badge bg-success">En stock</span>
-                                            <?php else: ?>
-                                                <span class="badge bg-danger">Sin stock</span>
-                                            <?php endif; ?>
+                                            <span class="badge bg-<?= $producto->getStock()?->getColor() ?>">
+                                                <?= $producto->getStock()?->getEstado() ?>
+                                            </span>
                                         </p>
                                         <p class="card-text text-end fw-bold h4"><?= $producto->formatearPrecio() ?></p>
                                     </div>
