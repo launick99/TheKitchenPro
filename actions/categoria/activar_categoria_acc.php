@@ -6,10 +6,10 @@
     try{
         $categoria = Categorias::getCategoriaPorId((int)$id);
         if(!$categoria->restore()){
-            die("Error al restaurar categoria.");
+            Alerta::agregarAlerta("danger", "Error al restaurar categoria.");
         }
     }catch(Exception $error){
-        die("Error al restaurar categoria: " . $error->getMessage());
+        Alerta::agregarAlerta("danger", "Error al restaurar categoria: " . $error->getMessage());
     }
     header("Location: ../../?section=dashboard_categorias");
 exit;

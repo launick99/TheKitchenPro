@@ -4,17 +4,19 @@
     $nombre      = $_POST['nombre'] ?? null;
     $descripcion = $_POST['descripcion'] ?? null;
     $activa      = isset($_POST['activa']) ? 1 : 0;
+    $error = false;
 
     if(strlen($nombre) < 5) {
-        $errores[] = "El nombre es obligatorio y debe ser mayor a 5 caracteres.";
+        Alerta::agregarAlerta("danger", "El nombre es obligatorio y debe ser mayor a 5 caracteres.");
+        $error = true;
     }
     if(strlen($descripcion) < 15) {
-        $errores[] = "La descripción es obligatoriay debe ser mayor a 15 caracteres.";
+        Alerta::agregarAlerta("danger", "La descripción es obligatoriay debe ser mayor a 15 caracteres.");
+        $error = true;
     }
 
-    if (!empty($errores)) {
+    if ($error) {
         $url = 
-            '&error='       . urlencode(implode(' | ', $errores)) .
             '&nombre='      . urlencode($nombre) .
             '&descripcion=' . urlencode($descripcion).
             '&activa='      . urlencode($activa);
@@ -30,7 +32,7 @@
             $activa
         );
     } catch (\Throwable $error) {
-        die('no se puede crear la categoria: ' . $error->getMessage());
+        Alerta::agregarAlerta("danger", 'no se puede crear la categoria: ' . $error->getMessage());
     }
     header("Location: ../../?section=dashboard_categorias");
 ?>

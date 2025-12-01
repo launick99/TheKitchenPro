@@ -36,7 +36,7 @@
     </head>
     <body class="d-flex flex-column" style="min-height: 100vh;">
         <?php include_once('views/plantillas/header.php'); ?>
-        <?php include_once('views/plantillas/error.php'); ?>
+        <?php include_once('views/plantillas/alerta.php'); ?>
         <main class="flex-grow-1">
             <?php 
                 try {

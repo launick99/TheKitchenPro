@@ -6,10 +6,10 @@
     try{
         $producto = Producto::getProductById((int)$id);
         if(!$producto->restore()){
-            die("Error al restaurar producto.");
+            Alerta::agregarAlerta("danger", "Error al restaurar producto.");
         }
     }catch(Exception $error){
-        die("Error al restaurar producto.");
+        Alerta::agregarAlerta("danger", "Error al restaurar producto.");
     }
     header("Location: ../../?section=dashboard_productos");
 exit;

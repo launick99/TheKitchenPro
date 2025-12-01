@@ -13,46 +13,60 @@
     $categorias   = $postData['categorias'] ?? [];
     $imagen       = $datosArchivo['imagen'] ?? null;
 
-    $errores = [];
+    $error = false;
 
     /* ----------------------------------
     |  Validaciones
     +---------------------------------- */
     if(strlen(trim($nombre)) < 3) {
-        $errores[] = "El nombre del producto es obligatorio y debe tener al menos 3 caracteres.";
+        Alerta::agregarAlerta("danger", "El nombre del producto es obligatorio y debe tener al menos 3 caracteres.");
+        $error = true;
     }
+
     if(strlen(trim($descripcion)) < 10) {
-        $errores[] = "La descripción es obligatoria y debe tener al menos 10 caracteres.";
+        Alerta::agregarAlerta("danger", "La descripción es obligatoria y debe tener al menos 10 caracteres.");
+        $error = true;
     }
+
     if(!is_numeric($precio) || $precio < 2000) {
-        $errores[] = "El precio debe ser un número mayor o igual a 2000.";
+        Alerta::agregarAlerta("danger", "El precio debe ser un número mayor o igual a 2000.");
+        $error = true;
     }
+
     if(!is_numeric($stock) || $stock < 1) {
-        $errores[] = "El stock debe ser un número mayor a 0.";
+        Alerta::agregarAlerta("danger", "El stock debe ser un número mayor a 0.");
+        $error = true;
     }
+
     if(!is_numeric($stock_minimo) || $stock_minimo < 0) {
-        $errores[] = "El stock mínimo debe ser un número igual o mayor a 0.";
+        Alerta::agregarAlerta("danger", "El stock mínimo debe ser un número igual o mayor a 0.");
+        $error = true;
     }
+
     if(!is_array($categorias) || count($categorias) === 0) {
-        $errores[] = "Debes seleccionar al menos una categoría.";
+        Alerta::agregarAlerta("danger", "Debes seleccionar al menos una categoría.");
+        $error = true;
     }
 
     if($imagen) {
         $permitidos = ['image/webp'];
+
         if(!in_array($imagen['type'], $permitidos)) {
-            $errores[] = "El archivo de imagen debe ser WEBP.";
+            Alerta::agregarAlerta("danger", "El archivo de imagen debe ser WEBP.");
+            $error = true;
         }
+
         if($imagen['size'] > 5*1024*1024) {
-            $errores[] = "El archivo de imagen no puede superar los 5MB.";
+            Alerta::agregarAlerta("danger", "El archivo de imagen no puede superar los 5MB.");
+            $error = true;
         }
     }
 
     /* ----------------------------------
     |  Errores
     +---------------------------------- */
-    if(!empty($errores)) {
+    if($error) {
         $url = 
-            '&error='      . urlencode(implode(' | ', $errores)) .
             '&nombre='     . urlencode($nombre) .
             '&descripcion='. urlencode($descripcion) .
             '&precio='     . urlencode($precio) .
@@ -64,7 +78,7 @@
         }
 
         header("Location: ../../?section=add_producto$url");
-        exit;
+        return;
     }
 
     /* ----------------------------------

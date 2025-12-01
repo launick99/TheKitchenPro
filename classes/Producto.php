@@ -23,17 +23,17 @@ class Producto {
     public function getNombre(): string{ 
         return $this->nombre; 
     }
-    public function getDescripcion(): string{ 
+    public function getDescripcion(): ?string{ 
         return $this->descripcion; 
     }
-    public function getPrecio(): float{ 
+    public function getPrecio(): ?float{ 
         return $this->precio; 
     }
-    public function getFechaIngreso(): string{ 
+    public function getFechaIngreso(): ?string{ 
         return $this->fechaIngreso; 
     }
 
-    public function getImagenReal(): string{ 
+    public function getImagenReal(): ?string{ 
         return$this->imagen; 
     }
     /**

@@ -2,8 +2,9 @@
     $categorias = Categorias::getTodas();
     
     $producto = Producto::getProductById($_GET['id']);
+    $nombre = $producto->getNombre();
     $stock = $producto->getStock();
-    $categoriasProducto = $producto->getCategorias();
+    $categoriasProducto = $producto->getCategorias() ?? [];
 
     if(isset($_GET['error'])){
         $producto->setNombre($_GET['nombre'] ?? '');
@@ -16,7 +17,7 @@
 ?>
 
 <section class="container my-5">
-    <h2>Crear un nuevo producto</h2>
+    <h2>Editar <?= $nombre ?></h2>
     <form action="actions/producto/actualizar_producto_acc.php" method="POST" enctype="multipart/form-data">
         <input type="hidden" id="id" name="id" value="<?= $producto->getId() ?>">
         <fieldset>
@@ -62,14 +63,14 @@
                 <div class="col-12 col-md-6">
                     <div class="mb-3">
                         <label for="stock" class="form-label">Stock</label>
-                        <input type="number" class="form-control" id="stock" name="stock" min="1" value="<?= $stock->getStock() ?>" required>
+                        <input type="number" class="form-control" id="stock" name="stock" min="1" value="<?= $stock?->getStock() ?>" required>
                         <p class="text-muted">Stock actual en depósito</p>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="mb-3">
                         <label for="stock_minimo" class="form-label">Stock Mínimo</label>
-                        <input type="number" class="form-control" id="stock_minimo" name="stock_minimo" min="0" value="<?= $stock->getStockMinimo() ?: 0 ?>" required>
+                        <input type="number" class="form-control" id="stock_minimo" name="stock_minimo" min="0" value="<?= $stock?->getStockMinimo() ?: 0 ?>" required>
                         <p class="text-muted">Advierte cuando hay poco stock del producto</p>
                     </div>
                 </div>

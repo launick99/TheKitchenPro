@@ -6,10 +6,10 @@
     try{
         $producto = Producto::getProductById((int)$id);
         if(!$producto->delete()){
-            die("Error al eliminar producto.");
+            Alerta::agregarAlerta("danger", "Error al eliminar producto.");
         }
     }catch(Exception $error){
-        die("Error al eliminar producto: " . $error->getMessage());
+        Alerta::agregarAlerta("danger", "Error al eliminar producto: " . $error->getMessage());
     }
     header("Location: ../../?section=dashboard_productos");
 exit;

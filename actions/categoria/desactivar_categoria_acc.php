@@ -6,10 +6,10 @@
     try{
         $categoria = Categorias::getCategoriaPorId((int)$id);
         if(!$categoria->delete()){
-            die("Error al eliminar categoria.");
+            Alerta::agregarAlerta("danger", "Error al eliminar categoria.");
         }
     }catch(Exception $error){
-        die("Error al eliminar categoria: " . $error->getMessage());
+        Alerta::agregarAlerta("danger", "Error al eliminar categoria: " . $error->getMessage());
     }
     header("Location: ../../?section=dashboard_categorias");
 exit;

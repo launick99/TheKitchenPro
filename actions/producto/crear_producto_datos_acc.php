@@ -9,7 +9,7 @@ $datos_nombre  = $postData['datos_nombre'] ?? [];
 $datos_valor   = $postData['datos_valor'] ?? [];
 $imagenes      = $datosArchivo['imagenes'] ?? null;
 
-$errores = [];
+$error = false;
 
 /* ----------------------------------
 | Validaciones básicas
