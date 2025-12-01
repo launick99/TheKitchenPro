@@ -137,6 +137,46 @@ class Producto {
     }
 
     /**
+     * Obtiene productos similares
+     * @return array
+     */
+    public function getProductosSimilares(): array{
+        $connection = Conexion::getConexion();
+        $categorias = $this->getCategorias();
+        if (!$categorias || count($categorias) === 0){
+            return [];
+        }
+        
+        $categoriasIds = [];
+        foreach ($categorias as $categoria) {
+            $categoriasIds[] = $categoria->getId();
+        }
+
+        $in = implode(',', array_fill(0, count($categoriasIds), '?'));
+
+        $sql = "
+            SELECT producto.*, COUNT(*) AS coincidencias
+            FROM producto
+            INNER JOIN producto_categoria categoria ON producto.id = categoria.producto_id
+            WHERE categoria.categoria_id IN ($in)
+            AND producto.id <> ?
+            AND producto.activo = 1
+            GROUP BY producto.id
+            ORDER BY coincidencias DESC, producto.nombre ASC
+            LIMIT 4
+        ";
+
+        $stmt = $connection->prepare($sql);
+        
+        $params = array_merge($categoriasIds, [$this->id]);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll() ?: [];
+    }
+    
+    /**
      * Filtra productos.
      *
      * @param string|null $buscar Palabra clave para buscar en nombre o descripcin

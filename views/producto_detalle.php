@@ -19,9 +19,11 @@
     $categorias = $producto->getCategorias() ?? [];
 
     $colores = ['primary', 'secondary', 'success', 'danger', 'warning'];
+
+    $productosRelaciones = $producto->getProductosSimilares();
 ?>
-<main class="container my-5">
-    <div class="row">
+<div class="container my-5">
+    <section class="row">
         <!-- Galería de imágenes -->
         <div class="col-12 col-md-6">
             <div class="product-main-image">
@@ -34,12 +36,12 @@
                 <?php endforeach; ?>
             </div>
         </div>
+        <div class="col-12 col-md-1"></div>
         <!-- Detalles del producto -->
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-5">
             <h2><?= $nombre ?></h2>
             <!-- estaba como sku en el trabajo del semetre pasado -->
             <p class="text-muted">SKU: <?= $sku ?></p> 
-            <p><?= $descripcion ?></p>
             <p class="fw-bold h2 text-success my-5"><?= $precio ?></p>
             <div class="my-5">
                 <?php foreach($categorias as $c => $categoria){ ?>
@@ -64,15 +66,34 @@
                     <span>Pago con tarjeta de crédito y débito.</span>    
                 </li>
             </ul>
-            <!-- No hace nada -->
-            <button class="btn btn-kitchenpro btn btn-warning w-100">
-                Comprar ahora
-            </button>
+            <div class="d-flex flex-col flex-md-row gap-5 justify-content-start my-5">
+                <!-- No hace nada -->
+                <div class="d-flex gap-1 justify-content-start">
+                    <div class="input-group mb-3">
+                        <input class="form-control" type="number" min="1" max="<?= $producto->getStock()?->getStock() ?>" value="1">
+                        <button class="btn btn-warning">
+                            <i class="fa-solid fa-cart-shopping fa-lg me-2" style="width:32px"></i>
+                            <span class="fw-bold">AGREGAR</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-warning">
+                        <i class="fa-solid fa-credit-card fa-lg me-2" style="width:32px"></i>
+                        <span class="fw-bold">COMPRAR</span>
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
-
+    </section>
+    <section class="my-5">
+        <h3 class="mb-4">Descripción</h3>
+        <p class="text-justify">
+            <?= nl2br($descripcion)  ?>
+        </p>
+    </section>
     <?php if (!empty($datos)): ?>
-        <section class="mt-5">
+        <section class="mt-1">
             <h3>Datos Técnicos</h3>
             <ul class="list-group">
                 <?php foreach ($datos as $c => $valor): ?>
@@ -83,13 +104,35 @@
             </ul>
         </section>
     <?php endif; ?>
-    <script>
-        function changeImage(element) {
-            document.getElementById('mainImage').src = element.src;
-            document.querySelectorAll('.galeria-productos .img-thumbnail').forEach(item => {
-                item.classList.remove('active');
-            });
-            element.classList.add('active');
-        }
-    </script>
-</main>
+    <section class="my-5">
+        <h3>Productos Relacionados</h3>
+        <div class="row">
+            <?php foreach ($productosRelaciones as $productoRelacionado){ ?>
+                <div class="col-12 col-md-6 col-xl-3 my-1">
+                    <a href="index.php?section=detalle&id=<?= $productoRelacionado->getId() ?>">
+                        <div class="card overflow-hidden">
+                            <div class="ratio ratio-1x1 border-bottom">
+                                <img src="<?= $productoRelacionado->getImagen() ?>" alt="<?= $productoRelacionado->getNombre() ?>">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title text-truncate"><?= $productoRelacionado->getNombre() ?></h5>
+                                <p class="card-text my-2"><?= $productoRelacionado->getDescripcionCorta() ?></p>
+                                <p class="card-text text-end fw-bold h4"><?= $producto->formatearPrecio() ?></p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <?php } ?>
+        </div>
+    </section>
+</div>
+
+<script>
+    function changeImage(element) {
+        document.getElementById('mainImage').src = element.src;
+        document.querySelectorAll('.galeria-productos .img-thumbnail').forEach(item => {
+            item.classList.remove('active');
+        });
+        element.classList.add('active');
+    }
+</script>
