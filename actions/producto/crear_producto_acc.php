@@ -116,7 +116,8 @@
     }
 
     // ir a otra pantalla para agregar info
+    Alerta::agregarAlerta("success", "Producto guardado correctamente!");
     header("Location: ../../?section=add_producto_info&id=$producto");
-    exit;
+    return;
 
 ?>

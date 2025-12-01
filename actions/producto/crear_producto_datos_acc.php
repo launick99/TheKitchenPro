@@ -50,7 +50,7 @@ if (!empty($imagenes) && isset($imagenes['name'])) {
 if (!empty($errores)) {
     $url = '&error=' . urlencode(implode(' | ', $errores));
     header("Location: ../../?section=add_producto_info&id=$producto_id$url");
-    exit;
+    return;
 }
 
 /* ----------------------------------
@@ -100,4 +100,4 @@ try {
 }
 
 header("Location: ../../?section=dashboard_productos");
-exit;
+return;

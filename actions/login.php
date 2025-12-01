@@ -4,7 +4,7 @@
 
     if ($_SERVER["REQUEST_METHOD"] !== "POST") {
         header("Location: ../login.php");
-        exit;
+        return;
     }
 
     if (session_status() == PHP_SESSION_NONE) {

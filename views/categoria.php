@@ -4,7 +4,7 @@
     if(!$categoria){
        include_once('views/error/404.php');
        include_once('views/plantillas/footer.php');
-       exit;
+       return;
     }
 
     $rangos = [

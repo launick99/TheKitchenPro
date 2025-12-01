@@ -8,4 +8,4 @@
     Autorizacion::logOut();
 
     header("Location: ../?section=inicio");
-    exit;
+    return;

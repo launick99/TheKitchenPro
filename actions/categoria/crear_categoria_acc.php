@@ -22,7 +22,7 @@
             '&activa='      . urlencode($activa);
 
         header("Location: ../../?section=add_categoria&$url");
-        exit;
+        return;
     }
 
     try {

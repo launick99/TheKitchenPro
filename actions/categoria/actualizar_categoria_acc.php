@@ -25,7 +25,7 @@
             '&activa='      . $activa;
 
         header("Location: ../../?section=editar_categoria&id=$id&$url");
-        exit;
+        return;
     }
 
     try {
