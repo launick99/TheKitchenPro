@@ -8,13 +8,13 @@ class Checkout{
          */
         public static function insert(array $datosCompra, array $items){
             $conexion = Conexion::getConexion();
-            $query = "INSERT INTO compra VALUES (NULL, :usuario_id, :fecha, :importe, :importe_envio)";
+            $query = "INSERT INTO compra VALUES (NULL, :usuario_id, :importe, :importe_envio, :fecha)";
             $PDOStatement = $conexion->prepare($query);
             $PDOStatement->execute([
                 "usuario_id" => $datosCompra['usuario_id'],
-                "fecha" => $datosCompra['fecha'],
                 "importe" => $datosCompra['importe'],
                 "importe_envio" => $datosCompra['importe_envio'],
+                "fecha" => $datosCompra['fecha'],
             ]);
 
             $id = $conexion->lastInsertId();
@@ -22,7 +22,7 @@ class Checkout{
             foreach ($items as $item) {
                 $producto = $item['producto'];
                 $cantidad = $item['cantidad'];
-                
+
                 $query = "INSERT INTO compra_item VALUES (NULL, :compra_id, :producto_id, :cantidad, :importe_item)";
                 $PDOStatement = $conexion->prepare($query);
                 $PDOStatement->execute([
@@ -31,6 +31,9 @@ class Checkout{
                     "cantidad" =>       $cantidad,
                     "importe_item" =>   $producto->getPrecio(),
                 ]);
+
+                $stock = $producto->getStock();
+                Stock::update($producto->getId(), $stock?->getStock() - $cantidad, $stock?->getStockMinimo());
             }
         }
 }

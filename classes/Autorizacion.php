@@ -47,10 +47,13 @@ class Autorizacion{
         if (!$usuario) {
             return false;
         }
-        if (!$usuario->getRolId()) {
-            return false;
+        if(self::bloqueda($vista->getId())){
+            if (!$usuario->getRolId()) {
+                return false;
+            }
+            return self::rolPuedeVer($usuario->getRolId(), $vista->getId());
         }
-        return self::rolPuedeVer($usuario->getRolId(), $vista->getId());
+        return true;
     }
 
 
@@ -79,7 +82,34 @@ class Autorizacion{
         ]);
 
         $resultado = $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
-        return $resultado ?? false;
+        if (!$resultado) {
+            return true;
+        }
+        return (bool)$resultado['permitido'];
+    }
+
+    /**
+     * devuelve si la vista esta bloqueada
+     */
+    private static function bloqueda(int $vistaId): bool{
+        $conexion = Conexion::getConexion();
+        $query = "
+            SELECT permitido 
+            FROM rol_vista
+            WHERE vista_id = :vista_id
+            LIMIT 1
+        ";
+
+        $PDOStatement = $conexion->prepare($query);
+        $PDOStatement->execute([
+            'vista_id' => $vistaId
+        ]);
+        $resultado = $PDOStatement->fetch();
+
+        if ($resultado) {
+            return true;
+        }
+        return false;
     }
     
 }

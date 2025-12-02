@@ -54,9 +54,9 @@
         }
         $datosCompra = [
             "usuario_id" => $usuario->getId(),
-            "fecha" => date('Y-m-d'),
             "importe" => Carrito::precioFinal() - Carrito::getEnvio(),
             "importe_envio" => Carrito::getEnvio(),
+            "fecha" => date('Y-m-d H:i:s'),
         ];
 
         Checkout::insert($datosCompra, $items);
