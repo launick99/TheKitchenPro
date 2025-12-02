@@ -81,7 +81,7 @@ class Autorizacion{
             'vista_id' => $vistaId
         ]);
 
-        $resultado = $PDOStatement->setFetchMode(PDO::FETCH_CLASS, self::class);
+        $resultado = $PDOStatement->fetch();
         if (!$resultado) {
             return true;
         }
