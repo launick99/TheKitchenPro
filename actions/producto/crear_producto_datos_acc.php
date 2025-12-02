@@ -58,7 +58,7 @@
     }
 
     if ($error) {
-        header("Location: ../../?section=add_producto_info&id=$producto_id$url");
+        header("Location: ../../?section=add_producto_info&id=$producto_id");
         return;
     }
 

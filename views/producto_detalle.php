@@ -80,12 +80,6 @@
                         </div>
                     </form>
                 </div>
-                <div class="mb-3">
-                    <button class="btn btn-warning">
-                        <i class="fa-solid fa-credit-card fa-lg me-2" style="width:32px"></i>
-                        <span class="fw-bold">COMPRAR</span>
-                    </button>
-                </div>
             </div>
         </div>
     </section>

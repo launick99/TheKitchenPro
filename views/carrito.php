@@ -28,7 +28,7 @@
                                     <img src="<?= $producto->getImagen() ?>" alt="Product 1" class="img-fluid rounded">
                                 </div>
                                 <div class="col-md-5">
-                                    <h5 class="card-title text-truncate"><?= $producto->getNombre() ?></h5>
+                                    <h3 class="card-title text-truncate"><?= $producto->getNombre() ?></h3>
                                     <p class="text-muted"><?= $producto->getDescripcionCorta() ?></p>
                                 </div>
                                 <div class="col-md-2">
